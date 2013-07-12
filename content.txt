@@ -1,0 +1,79 @@
+Jim studied at Oxford University
+Jim studied Functional Programming 
+Oxford university offers Functional Programming
+Jim likes Writing
+Jim wrote [Journal article about IF]
+[Journal article about IF] published in TPLOP
+Jim wrote [Three friends ...]
+[Three friends ...] published on Boing Boing
+Jim published via Boing Boing
+
+
+
+
+bio
+
+interests
+ - software design
+ - software architectue
+ - machine learning
+ - text mining
+ - data mining
+ - NLP
+ - big data
+
+real life
+ - tetsudo
+ - rock climbing
+ - writing
+ - old games
+ - comics
+
+companies
+ - mercia
+ - Siemens
+ - IBM
+ - Macmillan / DSci
+
+roles I've held
+ - programmer
+ - architect
+ - product manager
+
+accreditations
+ - Msc
+ - Bsc
+ - MBCS CITP
+ - DW author
+
+publications:
+ - journal articles
+ - tutorial articles
+ - POSA book (Tech editor)
+ - add mention in PRC text min
+ - blogging - digital science
+ - blogging - variable tree
+ - blogging - Boing Boing
+
+presentations:
+ - existing list
+ - add iAnnotate
+
+innovation
+ - patents x 2
+ - innovations on IP.com
+
+education:
+ - MSc
+ - BSc
+ - coursera: Calc 1
+ - coursera: ML
+
+media
+ - photos
+
+connect
+ - linked in
+ - twitter
+ - digital science profile
+ - github
