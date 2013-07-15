@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+
 <style>
 
 .node {
@@ -24,7 +25,15 @@ text.shadow {
 }
 
 </style>
+
 <body>
+
+<div id="option">
+    <input name="updateButton" 
+                 type="button" 
+                value="Update" 
+                onclick="updateData()" />
+</div>
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
@@ -45,9 +54,24 @@ var svg = d3.select("body").append("svg")
     .attr("height", height);
 
 d3.json("jimmy.json", function(error, graph) {
+ 
+  var nodes = {};
 
+  // Compute distinct nodes from the link source/target
+  graph.links.forEach(function(link) {
+    link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+    link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+  });
+
+  // Copy additional attributes from input JSON into derived node object
+  graph.nodes.forEach(function(node) {
+    nodes[node.name]["group"] = node["group"]
+  });
+
+
+  // Use the force
   force
-      .nodes(graph.nodes)
+      .nodes(d3.values(nodes))
       .links(graph.links)
       .start();
 
@@ -118,5 +142,20 @@ d3.json("jimmy.json", function(error, graph) {
 
   });
 });
+
+function updateData() {
+
+  console.log("hello");
+
+  var svg = d3.select("svg");
+  var circles = svg.selectAll("circle");
+
+  var g1 = circles.select(function(d, i) { return d.group == 1 ? this : null; });
+  g1.style("visibility", "hidden");
+
+
+
+
+}
 
 </script>

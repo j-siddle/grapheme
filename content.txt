@@ -4,6 +4,8 @@ TODO
  - show/hide groups
  - show/hide predicates
  - simplify json data
+ - swarm of bees
+
 
 
 

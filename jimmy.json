@@ -1,42 +1,43 @@
 {
   "nodes":[
-    {"name":"Interests","group":1},
-    {"name":"Oxford University","group":2},
-    {"name":"Writing","group":3},
-    {"name":"Functional Programming","group":3},
-    {"name":"[Journal article about IF]","group":4},
-    {"name":"TPLOP","group":5},
-    {"name":"[Three friends ...]","group":4},
-    {"name":"Boing Boing","group":5},
-
-    {"name":"Software design","group":3},
-    {"name":"Software Architecture","group":3},
-    {"name":"Machine Learning","group":3},
-    {"name":"Text Mining","group":3},
-    {"name":"Data Mining","group":3},
-    {"name":"Natural Language Processing","group":3},
-    {"name":"Big Data","group":3} ],
+    {"name":"Student",                  "group":1},
+    {"name":"Writer",                   "group":1},
+    {"name":"Oxford University",            "group":2},
+    {"name":"Writing",                      "group":3},
+    {"name":"Functional Programming",       "group":3},
+    {"name":"[Journal article about IF]",   "group":4},
+    {"name":"TPLOP",                        "group":5},
+    {"name":"[Three friends ...]",          "group":4},
+    {"name":"Boing Boing",                  "group":5},
+    {"name":"Software design",              "group":3},
+    {"name":"Software Architecture",        "group":3},
+    {"name":"Machine Learning",             "group":3},
+    {"name":"Text Mining",                  "group":3},
+    {"name":"Data Mining",                  "group":3},
+    {"name":"Natural Language Processing",  "group":3},
+    {"name":"Big Data",                     "group":3} ],
 
   "links":[
-    {"source":0,"target":1,"value":4,"pred":"studied at"},
-    {"source":0,"target":3,"value":4,"pred":"studied"},
+    {"source":"Student","target":"Oxford University","value":4,"pred":"studied at"},
+    {"source":"Student","target":"Functional Programming","value":4,"pred":"studied"},
 
-    {"source":0,"target":2,"value":4,"pred":"likes"},
-    {"source":0,"target":8,"value":4,"pred":"likes"},
-    {"source":0,"target":9,"value":4,"pred":"likes"},
-    {"source":0,"target":10,"value":4,"pred":"likes"},
-    {"source":0,"target":11,"value":4,"pred":"likes"},
-    {"source":0,"target":12,"value":4,"pred":"likes"},
-    {"source":0,"target":13,"value":4,"pred":"likes"},
-    {"source":0,"target":14,"value":4,"pred":"likes"},
+    {"source":"Writer","target":"Writing","value":4,"pred":"likes"},
+    {"source":"Student","target":"Software design","value":4,"pred":"likes"},
+    {"source":"Student","target":"Software Architecture","value":4,"pred":"likes"},
+    {"source":"Student","target":"Machine Learning","value":4,"pred":"likes"},
+    {"source":"Student","target":"Text Mining","value":4,"pred":"likes"},
+    {"source":"Student","target":"Data Mining","value":4,"pred":"likes"},
+    {"source":"Student","target":"Natural Language Processing","value":4,"pred":"likes"},
+    {"source":"Student","target":"Big Data","value":4,"pred":"likes"},
 
-    {"source":0,"target":4,"value":4,"pred":"wrote"},
-    {"source":0,"target":6,"value":4,"pred":"wrote"},
-    {"source":0,"target":7,"value":4,"pred":"published via"},
-    {"source":1,"target":3,"value":4,"pred":"offers"},
-    {"source":4,"target":5,"value":4,"pred":"published in"},
-    {"source":6,"target":7,"value":4,"pred":"published in"}
+    {"source":"Writer","target":"[Journal article about IF]","value":4,"pred":"wrote"},
+    {"source":"Writer","target":"[Three friends ...]","value":4,"pred":"wrote"},
+    {"source":"Writer","target":"TPLOP","value":4,"pred":"published via"},
+    {"source":"Oxford University","target":"Functional Programming","value":4,"pred":"offers"},
+    {"source":"[Journal article about IF]","target":"TPLOP","value":4,"pred":"published in"},
+    {"source":"[Three friends ...]","target":"Boing Boing","value":4,"pred":"published in"}
   ]
+
 }
 
 
