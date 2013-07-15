@@ -12,6 +12,17 @@
   stroke-opacity: .6;
 }
 
+text {
+  font: 12px sans-serif;
+  pointer-events: none;
+}
+
+text.shadow {
+  stroke: #fff;
+  stroke-width: 3px;
+  stroke-opacity: .8;
+}
+
 </style>
 <body>
 
@@ -25,36 +36,58 @@ var width = 960,
 var color = d3.scale.category20();
 
 var force = d3.layout.force()
-    .charge(-220)
-    .linkDistance(30)
+    .charge(-120)
+    .linkDistance(50)
     .size([width, height]);
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-d3.json("miserables.json", function(error, graph) {
+d3.json("jimmy.json", function(error, graph) {
+
   force
       .nodes(graph.nodes)
       .links(graph.links)
       .start();
 
-  var link = svg.selectAll(".link")
-      .data(graph.links)
-    .enter().append("line")
+  // Create line selection from links, then initialize
+  var lines = svg.selectAll(".lines")
+      .data( force.links() );
+
+  lines.enter()
+      .append("line")
       .attr("class", "link")
       .style("stroke-width", function(d) { return Math.sqrt(d.value); });
 
-  var node = svg.selectAll(".node")
-      .data(graph.nodes)
-    .enter()
+  // Create circle elements, initialize via enter
+  var circles = svg.append("svg:g").selectAll(".circles")
+      .data( force.nodes() );
+
+  circles.enter()
       .append("circle")
       .attr("class", "node")
       .attr("r", 10)
       .style("fill", function(d) { return color(d.group); })
       .call(force.drag);
 
-  var tooltip = d3.select("body")
+  // Create one SVG group per node element, for labels
+  var labels = svg.append("svg:g").selectAll(".labels")
+      .data( force.nodes() )
+      .enter().append("svg:g");
+
+  labels.append("svg:text")
+      .attr("x", 8)
+      .attr("y", ".31em")
+      .attr("class", "shadow")
+      .text(function(d) { return d.name; });
+
+  labels.append("svg:text")
+      .attr("x", 8)
+      .attr("y", ".31em")
+      .text(function(d) { return d.name; });
+
+/*  var tooltip = d3.select("body")
       .append("div")
       .style("position", "absolute")
       .style("z-index", "10")
@@ -62,18 +95,27 @@ d3.json("miserables.json", function(error, graph) {
       .text("a simple tooltip");
 
   node
-    .on("mouseover", function(){return tooltip.style("visibility", "visible");})
-    .on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
-    .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+    .on("mouseover", function(d) { 
+        return tooltip.style("visibility", "visible").text(d.name);
+      })
+    .on("mousemove", function() {return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+    .on("mouseout", function()  {return tooltip.style("visibility", "hidden");});
+*/
 
   force.on("tick", function() {
-    link.attr("x1", function(d) { return d.source.x; })
-        .attr("y1", function(d) { return d.source.y; })
-        .attr("x2", function(d) { return d.target.x; })
-        .attr("y2", function(d) { return d.target.y; });
 
-    node.attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; });
+    lines.attr("x1", function(d) { return d.source.x; })
+         .attr("y1", function(d) { return d.source.y; })
+         .attr("x2", function(d) { return d.target.x; })
+         .attr("y2", function(d) { return d.target.y; });
+
+    circles.attr("cx", function(d) { return d.x; })
+           .attr("cy", function(d) { return d.y; });
+
+    labels.attr("transform", function(d) {
+      return "translate(" + d.x + "," + d.y + ")";
+    });
+
   });
 });
 

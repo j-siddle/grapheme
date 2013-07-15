@@ -1,13 +1,9 @@
-Jim studied at Oxford University
-Jim studied Functional Programming 
-Oxford university offers Functional Programming
-Jim likes Writing
-Jim wrote [Journal article about IF]
-[Journal article about IF] published in TPLOP
-Jim wrote [Three friends ...]
-[Three friends ...] published on Boing Boing
-Jim published via Boing Boing
-
+TODO
+ - show predicates
+ - highlight selection
+ - show/hide groups
+ - show/hide predicates
+ - simplify json data
 
 
 
