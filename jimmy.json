@@ -17,6 +17,13 @@
     {"name":"Natural Language Processing",  "group":3},
     {"name":"Big Data",                     "group":3} ],
 
+  "groups":[
+    {"name":"Persona",     "id":1},
+    {"name":"Institution", "id":2},
+    {"name":"Interest",    "id":3},
+    {"name":"Article",     "id":4},
+    {"name":"Publication", "id":5}],
+
   "links":[
     {"source":"Student","target":"Oxford University","value":4,"pred":"studied at"},
     {"source":"Student","target":"Functional Programming","value":4,"pred":"studied"},

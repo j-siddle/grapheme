@@ -28,14 +28,16 @@ text.shadow {
 
 <body>
 
-<div id="option">
-    <input name="updateButton" 
+<div id="options">
+
+    <input name="resetButton" 
                  type="button" 
-                value="Update" 
-                onclick="updateData()" />
+                value="Reset" 
+                onclick="reset()" />
 </div>
 
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="d3.v3.min.js"></script>
+<script src="jquery-1.10.2.min.js"></script>
 
 <script>
 
@@ -53,40 +55,66 @@ var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-d3.json("jimmy.json", function(error, graph) {
- 
-  var nodes = {};
+// The complete data...
+var orig_graph = null;
+var all_nodes = {};
 
-  // Compute distinct nodes from the link source/target
-  graph.links.forEach(function(link) {
-    link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
-    link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+// The selected data, displayed in the graph
+var curr_links = null;
+var curr_nodes = null;
+
+// Derived data, including active groups
+var active_groups = {};
+
+function filterData(sel_groups) {
+
+  // Initialize the graph. 
+  curr_nodes = [];
+  curr_links = [];
+
+  $.each(all_nodes, function(index, node) {
+
+    if (node.group in sel_groups) {
+      curr_nodes.push(node); 
+    }
+
   });
 
-  // Copy additional attributes from input JSON into derived node object
-  graph.nodes.forEach(function(node) {
-    nodes[node.name]["group"] = node["group"]
-  });
+  $.each(orig_graph.links, function(index, link) {
 
+    if (link.source.group in sel_groups && link.target.group in sel_groups) {
+      curr_links.push(link); 
+    }
+
+  });
+}
+
+function updateViz() {
+
+  $('.node').remove();
+  $('.link').remove();
+  $('.shadow').remove();
+  $('.label').remove();
 
   // Use the force
   force
-      .nodes(d3.values(nodes))
-      .links(graph.links)
-      .start();
+      .nodes(curr_nodes)
+      .links(curr_links)
+      .start(); 
 
   // Create line selection from links, then initialize
   var lines = svg.selectAll(".lines")
-      .data( force.links() );
+      .data( curr_links );
 
   lines.enter()
       .append("line")
       .attr("class", "link")
       .style("stroke-width", function(d) { return Math.sqrt(d.value); });
 
+
   // Create circle elements, initialize via enter
-  var circles = svg.append("svg:g").selectAll(".circles")
-      .data( force.nodes() );
+  var circles = svg.selectAll(".circles")
+      .data( curr_nodes );
 
   circles.enter()
       .append("circle")
@@ -97,7 +125,7 @@ d3.json("jimmy.json", function(error, graph) {
 
   // Create one SVG group per node element, for labels
   var labels = svg.append("svg:g").selectAll(".labels")
-      .data( force.nodes() )
+      .data( curr_nodes )
       .enter().append("svg:g");
 
   labels.append("svg:text")
@@ -109,6 +137,7 @@ d3.json("jimmy.json", function(error, graph) {
   labels.append("svg:text")
       .attr("x", 8)
       .attr("y", ".31em")
+      .attr("class", "label")
       .text(function(d) { return d.name; });
 
 /*  var tooltip = d3.select("body")
@@ -126,6 +155,8 @@ d3.json("jimmy.json", function(error, graph) {
     .on("mouseout", function()  {return tooltip.style("visibility", "hidden");});
 */
 
+
+
   force.on("tick", function() {
 
     lines.attr("x1", function(d) { return d.source.x; })
@@ -141,21 +172,64 @@ d3.json("jimmy.json", function(error, graph) {
     });
 
   });
+
+};
+
+d3.json("jimmy.json", function(error, json_data) {
+
+  // Store original graph data
+  orig_graph = json_data;
+
+  // Compute distinct nodes objects from the link source/target
+  orig_graph.links.forEach(function(link) {
+    link.source = all_nodes[link.source] || (all_nodes[link.source] = {name: link.source});
+    link.target = all_nodes[link.target] || (all_nodes[link.target] = {name: link.target});
+  });
+
+  // Copy additional attributes from input JSON into derived node object
+  orig_graph.nodes.forEach(function(node) {
+    all_nodes[node.name]["group"] = node["group"];    
+  });
+
+  // Deduce list of groups, and create group buttons
+
+  $.each(json_data.groups, function(index, group) {
+    active_groups[group.id] = true;
+    button_id = "group_selector_" + group.id;
+
+    $("#options").append(
+      "<input type='checkbox' checked id='"+button_id+"' value='"+group.id+"'>"
+      +group.name
+      )
+    $("#"+button_id).change( function() {
+
+      sel_grp = $(this).val();
+      $(this).is(':checked') ? active_groups[sel_grp] = true : delete active_groups[sel_grp] ;
+
+      // Refresh graph data, then update the vizualization
+      filterData(active_groups);
+      updateViz();
+
+    });
+  });
+
+  // Now initialize!
+  filterData(active_groups);
+  updateViz();
+
 });
 
-function updateData() {
-
-  console.log("hello");
-
-  var svg = d3.select("svg");
-  var circles = svg.selectAll("circle");
-
-  var g1 = circles.select(function(d, i) { return d.group == 1 ? this : null; });
-  g1.style("visibility", "hidden");
 
 
+function reset() {
 
+  curr_nodes = d3.values(all_nodes);
+  curr_links = orig_graph.links;
+  updateViz( );
 
 }
+
+
+
 
 </script>
