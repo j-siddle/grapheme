@@ -1,77 +1,83 @@
 TODO
  - show predicates
- - highlight selection
- - show/hide groups
- - show/hide predicates
- - simplify json data
- - swarm of bees
+ - define facts to capture
+ - generate full data set
+ - play with datas
 
 
 
 
-bio
 
-interests
- - software design
- - software architectue
- - machine learning
- - text mining
- - data mining
- - NLP
- - big data
+BIO - primary facts
 
-real life
- - tetsudo
- - rock climbing
- - writing
- - old games
- - comics
+Software Engineer,skilled_in,Software Design
+Software Engineer,skilled_in,Software Architectue
+Software Engineer,skilled_in,Machine Learning
+Software Engineer,skilled_in,Text Mining
+Software Engineer,skilled_in,Data Mining
+Software Engineer,skilled_in,Big Data
+Software Engineer,skilled_in,Application Development
+Software Engineer,skilled_in,Data Processing
+Software Engineer,can_write,Java
+Software Engineer,can_write,Ruby
+Software Engineer,can_write,JavaScript
+Software Engineer,accredited_with,MBCS CITP
+Software Engineer,accredited_with,DeveloperWorks Author Award
 
-companies
- - mercia
- - Siemens
- - IBM
- - Macmillan / DSci
+Product Manager,responsible_for,That's Confidential
 
-roles I've held
- - programmer
- - architect
- - product manager
+Employee,worked_for,Mercia Software
+Employee,worked_for,Siemens Communications
+Employee,worked_for,IBM
+Employee,worked_for,Digital Science
+Employee,has,Curriculum Vitae
 
-accreditations
- - Msc
- - Bsc
- - MBCS CITP
- - DW author
+Person,practiced,Tetsudo
+Person,love,Rock Climbing
+Person,love,Writing
+Person,love,Old Computer Games
+Person,love,Comic Books
+Person,love,Movies
+Person,love,Travel
 
-publications:
- - journal articles
- - tutorial articles
- - POSA book (Tech editor)
- - add mention in PRC text min
- - blogging - digital science
- - blogging - variable tree
- - blogging - Boing Boing
+Writer,wrote,[Journal Articles]
+Writer,wrote,[Technical Articles]
+Writer,wrote,[Tutorial Articles]
+Writer,wrote,[Three Friends article]
+Writer,edited,POSA For Dummies
+Writer,mentioned_in,PRC text mining
+Writer,blogged_on,Boing Boing
+Writer,blogged_on,Digital Science Blog
+Writer,blogged_on,Variable Tree
+Writer,published_in,TPLOP
+Writer,published_in,IBM DeveloperWorks
+Writer,published_in,ObjektSpectrum
 
-presentations:
- - existing list
- - add iAnnotate
+Public Speaker,presented_at,[Some places]
+Public Speaker,presented_at,iAnnotate
 
-innovation
- - patents x 2
- - innovations on IP.com
+Inventor,filed_patent,[IBM patent 1]
+Inventor,filed_patent,[IBM patent 2]
+Inventor,published_via,IP.com
+Inventor,awarded,Siemens Innovation Award
 
-education:
- - MSc
- - BSc
- - coursera: Calc 1
- - coursera: ML
+Academic,received,BSc Computing (1st Class)
+Academic,received,MSc Software Engineering (Distinction)
+Academic,studied_at,Loughborough University
+Academic,studied_at,Oxford University
+Academic,studied_at,Coursera
+Academic,received,Calculus One (top marks)
+Academic,received,Machine Learning (top marks)
+Academic,published,[Journal Articles]
+Academic,published_in,TPLOP
 
-media
- - photos
+Digital Entity,on,LinkedIn
+Digital Entity,on,Twitter
+Digital Entity,on,Digital Science
+Digital Entity,on,Github
+Digital Entity,identified_by,ISNI
+Digital Entity,identified_by,Orcid
+Digital Entity,recorded_in,Photographs
+ 
 
-connect
- - linked in
- - twitter
- - digital science profile
- - github
+
