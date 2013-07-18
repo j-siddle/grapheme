@@ -1,0 +1,85 @@
+{
+  "nodes":[
+    {"name":"Student",                  "group":1},
+    {"name":"Writer",                   "group":1},
+
+    {"name":"Oxford University",            "group":2},
+    {"name":"Coursera",                     "group":2},
+
+    {"name":"Writing",                      "group":6},    
+    {"name":"Functional Programming",       "group":6},    
+    {"name":"Software Product Lines",       "group":6},    
+    {"name":"SOA",                          "group":6},    
+    {"name":"Software design",              "group":6},
+    {"name":"Software Architecture",        "group":6},
+    {"name":"Machine Learning",             "group":6},
+    {"name":"Calculus",                     "group":6},
+    {"name":"Text Mining",                  "group":6},
+    {"name":"Data Mining",                  "group":6},
+    {"name":"Natural Language Processing",  "group":6},
+    {"name":"Big Data",                     "group":6},
+
+    {"name":"TPLOP",                        "group":5},
+    {"name":"Boing Boing",                  "group":5},
+
+    {"name":"[Journal article about IF]",   "group":4},
+    {"name":"[Three friends ...]",          "group":4}
+
+],
+
+  "groups":[
+    {"name":"Persona",     "id":1},
+    {"name":"Institution", "id":2},
+    {"name":"Article",     "id":4},
+    {"name":"Publication", "id":5},
+    {"name":"Skill",       "id":6}
+],
+
+  "predicates":[
+    {"name":"Studied At",   "id":"studied_at"},
+    {"name":"Studied",      "id":"studied"},
+    {"name":"Likes",        "id":"likes"},
+    {"name":"Wrote",        "id":"wrote"},
+    {"name":"Offers",       "id":"offers"},
+    {"name":"Published In", "id":"published_in"}],
+
+  "links":[
+    {"source":"Student","target":"Oxford University","value":4,"pred":"studied_at"},
+    {"source":"Student","target":"Coursera","value":4,"pred":"studied_at"},
+
+    {"source":"Student","target":"Functional Programming","value":4,"pred":"studied"},
+    {"source":"Student","target":"SOA","value":4,"pred":"studied"},
+    {"source":"Student","target":"Software Product Lines","value":4,"pred":"studied"},
+    {"source":"Student","target":"Functional Programming","value":4,"pred":"studied"},
+    {"source":"Student","target":"Calculus","value":4,"pred":"studied"},
+    {"source":"Student","target":"Machine Learning","value":4,"pred":"studied"},
+
+    {"source":"Oxford University","target":"Functional Programming","value":4,"pred":"offers"},
+    {"source":"Oxford University","target":"SOA","value":4,"pred":"offers"},
+    {"source":"Oxford University","target":"Software Product Lines","value":4,"pred":"offers"},
+
+    {"source":"Coursera","target":"Machine Learning","value":4,"pred":"offers"},
+    {"source":"Coursera","target":"Calculus","value":4,"pred":"offers"},
+
+    {"source":"Writer","target":"Writing","value":4,"pred":"likes"},
+    {"source":"Student","target":"Software design","value":4,"pred":"likes"},
+    {"source":"Student","target":"Software Architecture","value":4,"pred":"likes"},
+    {"source":"Student","target":"Machine Learning","value":4,"pred":"likes"},
+    {"source":"Student","target":"Text Mining","value":4,"pred":"likes"},
+    {"source":"Student","target":"Data Mining","value":4,"pred":"likes"},
+    {"source":"Student","target":"Natural Language Processing","value":4,"pred":"likes"},
+    {"source":"Student","target":"Big Data","value":4,"pred":"likes"},
+
+    {"source":"Writer","target":"[Journal article about IF]","value":4,"pred":"wrote"},
+    {"source":"Writer","target":"[Three friends ...]","value":4,"pred":"wrote"},
+    {"source":"Writer","target":"TPLOP","value":4,"pred":"published_in"},
+    {"source":"Writer","target":"Boing Boing","value":4,"pred":"published_in"},
+    {"source":"[Journal article about IF]","target":"TPLOP","value":4,"pred":"published_in"},
+    {"source":"[Three friends ...]","target":"Boing Boing","value":4,"pred":"published_in"}
+  ]
+
+}
+
+
+
+

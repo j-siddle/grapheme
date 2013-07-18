@@ -1,17 +1,5 @@
-TODO
- - show predicates
- - define facts to capture
- - generate full data set
- - play with datas
-
-
-
-
-
-BIO - primary facts
-
 Software Engineer,skilled_in,Software Design
-Software Engineer,skilled_in,Software Architectue
+Software Engineer,skilled_in,Software Architecture
 Software Engineer,skilled_in,Machine Learning
 Software Engineer,skilled_in,Text Mining
 Software Engineer,skilled_in,Data Mining
@@ -66,8 +54,8 @@ Academic,received,MSc Software Engineering (Distinction)
 Academic,studied_at,Loughborough University
 Academic,studied_at,Oxford University
 Academic,studied_at,Coursera
-Academic,received,Calculus One (top marks)
-Academic,received,Machine Learning (top marks)
+Academic,received,Calculus One
+Academic,received,Machine Learning
 Academic,published,[Journal Articles]
 Academic,published_in,TPLOP
 
@@ -78,6 +66,5 @@ Digital Entity,on,Github
 Digital Entity,identified_by,ISNI
 Digital Entity,identified_by,Orcid
 Digital Entity,recorded_in,Photographs
- 
 
 
