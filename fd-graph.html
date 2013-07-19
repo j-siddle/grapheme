@@ -63,14 +63,17 @@ text.shadow {
   var orig_graph = null;
   var all_nodes = {};
 
+  // User selections
+  var active_groups = {};
+  var active_predicates = {};
+
   // The selected data, displayed in the graph
   var curr_links = null;
   var curr_nodes = null;
 
-  // Derived data, including active groups
-  var active_groups = {};
-  var active_predicates = {};
-
+  // Selections used for viz management
+  var hover_edge_paths = null;
+  var hover_edge_labels = null;
 
 
   function init() {
@@ -80,11 +83,16 @@ text.shadow {
       // Store original graph data
       orig_graph = json_data;
 
-      // Compute distinct nodes objects from the link source/target
+      // Compute distinct nodes objects from the link source/target,
+      // then update nodes and link objects to refer to each other
       orig_graph.links.forEach(function(link) {
         console.log(link)
-        link.source = all_nodes[link.source] || (all_nodes[link.source] = {name: link.source});
-        link.target = all_nodes[link.target] || (all_nodes[link.target] = {name: link.target});
+        link.source = all_nodes[link.source] || (all_nodes[link.source] = {name: link.source, links: []});
+        link.target = all_nodes[link.target] || (all_nodes[link.target] = {name: link.target, links: []});
+
+        link.source.links.push(link);
+        link.target.links.push(link);
+
       });
 
       // Copy additional attributes from input JSON into derived node object
@@ -198,40 +206,7 @@ text.shadow {
         .append("line")
         .attr("class", "link")
         .style("stroke-width", function(d) { return Math.sqrt(d.value); });
-
-    var edgepaths = svg.selectAll(".edgepath")
-          .data(curr_links)
-          .enter()
-          .append('path')
-          .attr({'d': function(d) {return 'M '+d.source.x+' '+d.source.y+' L '+ d.target.x +' '+d.target.y},
-                 'class':'edgepath',
-                 'fill-opacity':0,
-                 'stroke-opacity':0,
-                 'fill':'blue',
-                 'stroke':'red',
-                 'id':function(d,i) {return 'edgepath'+i}})
-          .style("pointer-events", "none");
-
-    // Edge labels and paths - cut and paste coding from:
-    // http://bl.ocks.org/jhb/5955887
-    var edgelabels = svg.selectAll(".edgelabel")
-        .data(curr_links);
-
-    edgelabels.enter()
-        .append('text')
-        .style("pointer-events", "none")
-        .style("visibility", "hidden")
-        .attr({'class':'edgelabel',
-               'id':function(d,i){return 'edgelabel'+i},
-               'dx':20,
-               'dy':0,
-               'font-size':10,
-               'fill':'#aaa'});
-
-    edgelabels.append('textPath')
-          .attr('xlink:href',function(d,i) {return '#edgepath'+i})
-          .style("pointer-events", "none")
-          .text(function(d,i){return d.pred});
+    
 
     // Create circle elements, initialize via enter
     var circles = svg.selectAll(".circles")
@@ -240,13 +215,62 @@ text.shadow {
     circles.enter()
         .append("circle")
         .attr("class", "node")
+        .attr("id", function(d) { return d.name; } )
         .attr("r", 10)
         .style("fill", function(d) { return color(d.group); })
         .call(force.drag);
 
-    $(".node").hover( 
-      function() { edgelabels.style("visibility", "visible") },
-      function() { edgelabels.style("visibility", "hidden") });
+    $(".node").hover(
+
+          function() {
+
+              hov_links = all_nodes[$(this).attr('id')].links
+
+              hover_edge_paths = svg.selectAll(".edgepath")
+                    .data( hov_links )
+                    .enter()
+                    .append('path')
+                    .attr({'d': function(d) {return 'M '+d.source.x+' '+d.source.y+' L '+ d.target.x +' '+d.target.y},
+                           'class':'edgepath',
+                           'fill-opacity':0,
+                           'stroke-opacity':0,
+                           'fill':'blue',
+                           'stroke':'red',
+                           'id':function(d,i) {return 'edgepath'+i}})
+                    .style("pointer-events", "none");
+
+              // Edge labels and paths - cut and paste coding from:
+              // http://bl.ocks.org/jhb/5955887
+              hover_edge_labels = svg.selectAll(".edgelabel")
+                  .data( hov_links );
+
+              hover_edge_labels.enter()
+                  .append('text')
+                  .style("pointer-events", "none")
+                  .attr({'class':'edgelabel',
+                         'id':function(d,i){return 'edgelabel'+i},
+                         'dx':20,
+                         'dy':0,
+                         'font-size':10,
+                         'fill':'#aaa'});
+
+              hover_edge_labels.append('textPath')
+                    .attr('xlink:href',function(d,i) {return '#edgepath'+i})
+                    .style("pointer-events", "none")
+                    .text(function(d,i){return d.pred});
+          },
+
+          function() { 
+
+
+            $('.edgelabel').remove();
+            $('.edgepath').remove();
+
+            hover_edge_labels = null;
+            hover_edge_paths = null;
+
+          }
+    );
 
     // Create one SVG group per node element, for labels
     var labels = svg.append("svg:g").selectAll(".labels")
@@ -280,22 +304,29 @@ text.shadow {
           return "translate(" + d.x + "," + d.y + ")";
       });
 
-      // Edge labels and paths - C&P from online sample
-      edgepaths.attr('d', function(d) { 
-          var path='M '+d.source.x+' '+d.source.y+' L '+ d.target.x +' '+d.target.y;
-          return path}); 
+      if (hover_edge_paths != null) {
 
-      edgelabels.attr('transform',function(d,i) {
-          if (d.target.x<d.source.x){
-            bbox = this.getBBox();
-            rx = bbox.x+bbox.width/2;
-            ry = bbox.y+bbox.height/2;
-            return 'rotate(180 '+rx+' '+ry+')';
-          }
-          else {
-            return 'rotate(0)';
-          }
-      });
+        // Edge labels and paths - C&P from online sample
+        hover_edge_paths.attr('d', function(d) { 
+            var path='M '+d.source.x+' '+d.source.y+' L '+ d.target.x +' '+d.target.y;
+            return path}); 
+
+      }
+
+      if (hover_edge_labels != null) {
+
+        hover_edge_labels.attr('transform',function(d,i) {
+            if (d.target.x<d.source.x){
+              bbox = this.getBBox();
+              rx = bbox.x+bbox.width/2;
+              ry = bbox.y+bbox.height/2;
+              return 'rotate(180 '+rx+' '+ry+')';
+            }
+            else {
+              return 'rotate(0)';
+            }
+        });
+      }
 
     });
 
