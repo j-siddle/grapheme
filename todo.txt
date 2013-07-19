@@ -1,10 +1,10 @@
 TODO
- - show predicates
- - show limited predicates
  - define facts to capture
  - generate full data set
  - play with datas
  - allow predicate ID and readable name
  - full group data
-
+ - split 'Person'
+ - multi-level Publication (e.g. Journal is_a Publication)
+ - limit view by persona
 

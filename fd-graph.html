@@ -29,16 +29,14 @@ text.shadow {
 
 <body>
 
-  <div id="viz">
-  </div>
-
   <div id="options">
 
-      <input name="resetButton" 
-                   type="button" 
-                  value="Reset" 
-                  onclick="reset()" />
+      <input name="resetButton" type="button" value="Reset" onclick="reset()" />
+
   </div>
+
+  <div id="viz"></div>
+
 
   <script src="d3.v3.min.js"></script>
   <script src="jquery-1.10.2.min.js"></script>
@@ -66,6 +64,7 @@ text.shadow {
   // User selections
   var active_groups = {};
   var active_predicates = {};
+  var active_personas = {};
 
   // The selected data, displayed in the graph
   var curr_links = null;
@@ -86,7 +85,6 @@ text.shadow {
       // Compute distinct nodes objects from the link source/target,
       // then update nodes and link objects to refer to each other
       orig_graph.links.forEach(function(link) {
-        console.log(link)
         link.source = all_nodes[link.source] || (all_nodes[link.source] = {name: link.source, links: []});
         link.target = all_nodes[link.target] || (all_nodes[link.target] = {name: link.target, links: []});
 
@@ -97,7 +95,6 @@ text.shadow {
 
       // Copy additional attributes from input JSON into derived node object
       orig_graph.nodes.forEach(function(node) {
-        console.log(node)
         all_nodes[node.name]["group"] = node["group"];
       });
 
@@ -118,19 +115,51 @@ text.shadow {
           $(this).is(':checked') ? active_groups[sel_grp] = true : delete active_groups[sel_grp] ;
 
           // Refresh graph data, then update the vizualization
-          filterData(active_groups, active_predicates);
+          filterData(active_groups, active_personas, active_predicates);
           updateViz();
 
         });
       });
 
-      $("#options").append("<br>")
 
-      // Deduce list of predicates, create buttons
+      // PERSONA SELECTORS
+
+      $("#options").append("<br>")
+      
+      numeric_node_index = 1;
+      $.each(all_nodes, function(index, node) {
+
+        if (node.group == 1) {
+
+          button_id = "persona_selector_" + numeric_node_index;
+          numeric_node_index ++;
+          $("#options").append(
+            "<input type='checkbox' class='persona_selector' id='"+button_id+"' value='"+node.name+"'>"
+            +node.name );
+
+          $("#"+button_id).change( function() {
+
+            sel_persona = $(this).val();
+            $(this).is(':checked') ? active_personas[sel_persona] = true : delete active_personas[sel_persona] ;
+
+            // Refresh graph data, then update the vizualization
+            filterData(active_groups, active_personas, active_predicates);
+            updateViz();
+
+          }); 
+        }
+
+      });
+
+
+      // PREDICATE SELECTION, BUTTONS AND HANDLERS
+      //#options").append("<br>")
+
       $.each(json_data.predicates, function(index, predicate) {
 
         active_predicates[predicate.id] = true;
 
+        /*        
         $("#options").append(
           "<input type='checkbox' checked id='"+predicate.id+"' value='"+predicate.id+"'>"
           +predicate.name
@@ -141,15 +170,16 @@ text.shadow {
           $(this).is(':checked') ? active_predicates[sel_pred] = true : delete active_predicates[sel_pred] ;
 
           // Refresh graph data, then update the vizualization
-          filterData(active_groups, active_predicates);
+          filterData(active_groups, active_personas, active_predicates);
           updateViz();
 
-        });
-      });
-
+        }); */
+        
+      }); 
+      
 
       // Now initialize!
-      filterData(active_groups, active_predicates);
+      filterData(active_groups, active_personas, active_predicates);
       updateViz();
 
     });
@@ -158,7 +188,7 @@ text.shadow {
 
 
 
-  function filterData(sel_groups, sel_predicates) {
+  function filterData(sel_groups, sel_personas, sel_predicates) {
 
     // Initialize the graph. 
     curr_nodes = [];
@@ -166,17 +196,23 @@ text.shadow {
 
     $.each(all_nodes, function(index, node) {
 
-      if (node.group in sel_groups) {
+      if (node.group == 1 && node.name in sel_personas) {
         curr_nodes.push(node); 
       }
+      else if (node.group in sel_groups ) {
+        curr_nodes.push(node); 
+      } 
 
     });
 
     $.each(orig_graph.links, function(index, link) {
 
-      if (link.source.group in sel_groups && 
-          link.target.group in sel_groups &&
-          link.pred in sel_predicates) {
+      nodes_allowed = 
+        (link.source.group in sel_groups && link.target.group in sel_groups) ||
+        (link.source.group in sel_groups && link.target.name in sel_personas) ||
+        (link.source.name in sel_personas && link.target.group in sel_groups);
+
+      if (nodes_allowed && link.pred in sel_predicates) {
         curr_links.push(link); 
       }
 
@@ -332,15 +368,11 @@ text.shadow {
 
   };
 
-
   function reset() {
-
     curr_nodes = d3.values(all_nodes);
     curr_links = orig_graph.links;
     updateViz( );
-
   }
-
 
   init();
 

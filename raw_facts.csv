@@ -61,10 +61,93 @@ Academic,published_in,TPLOP
 
 Digital Entity,on,LinkedIn
 Digital Entity,on,Twitter
-Digital Entity,on,Digital Science
 Digital Entity,on,Github
+Digital Entity,recorded_in,Flickr
 Digital Entity,identified_by,ISNI
 Digital Entity,identified_by,Orcid
-Digital Entity,recorded_in,Photographs
+
+
+Software Engineer,is_a,Persona
+Product Manager,is_a,Persona
+Employee,is_a,Persona
+Person,is_a,Persona
+Writer,is_a,Persona
+Public Speaker,is_a,Persona
+Inventor,is_a,Persona
+Academic,is_a,Persona
+Digital Entity,is_a,Persona
+
+Software Design,is_a,Skill
+Software Architecture,is_a,Skill
+Machine Learning,is_a,Skill
+Text Mining,is_a,Skill
+Data Mining,is_a,Skill
+Big Data,is_a,Skill
+Application Development,is_a,Skill
+Data Processing,is_a,Skill
+Java,is_a,Skill
+Ruby,is_a,Skill
+JavaScript,is_a,Skill
+
+BSc Computing (1st Class),is_a,Award
+MSc Software Engineering (Distinction),is_a,Award
+MBCS CITP,is_a,Award
+DeveloperWorks Author Award,is_a,Award
+Siemens Innovation Award,is_a,Award
+Calculus One,is_a,Award
+Machine Learning,is_a,Award
+
+Online Course,is_a,Online Course
+Machine Learning,is_a,Online Course
+
+LinkedIn,is_a,Online Presence
+Twitter,is_a,Online Presence
+Github,is_a,Online Presence
+Flickr,is_a,Online Presence
+
+ISNI,is_a,Digital Identifier
+Orcid,is_a,Digital Identifier
+
+
+Mercia Software,is_a,Company
+Siemens Communications,is_a,Company
+IBM,is_a,Company
+Digital Science,is_a,Company
+
+Loughborough University,is_a,Academic Institution
+Oxford University,is_a,Academic Institution
+Coursera,is_a,Academic Institution
+
+Tetsudo,is_a,Interest
+Rock Climbing,is_a,Interest
+Writing,is_a,Interest
+Old Computer Games,is_a,Interest
+Comic Books,is_a,Interest
+Movies,is_a,Interest
+Travel,is_a,Interest
+
+[Journal Articles],is_a,Article
+[Technical Articles],is_a,Article
+[Tutorial Articles],is_a,Article
+[Three Friends article],is_a,Blog Post
+POSA For Dummies,is_a,Book
+
+PRC text mining,is_a,Publication
+Boing Boing,is_a,Blog
+Digital Science Blog,is_a,Blog
+Variable Tree,is_a,Blog
+TPLOP,is_a,Journal
+IBM DeveloperWorks,is_a,Publication
+ObjektSpectrum,is_a,Publication
+
+[IBM patent 1],is_a,Patent
+[IBM patent 2],is_a,Patent
+IP.com,is_a,Publication
+
+[Some places],is_a,Forum
+iAnnotate,is_a,Forum
+
+Curriculum Vitae,is_a,Object
+That's Confidential,is_a,Object
 
 

@@ -1,3 +1,22 @@
+Persona,3
+Skill,3
+Award,3
+Online Course,3
+Online Presence,3
+Digital Identifier,3
+Company,3
+Academic Institution,3
+Interest,3
+Article,3
+Blog Post,3
+Book,3
+Blog,3
+Publication,3
+Journal,3
+Patent,3
+Forum,3
+Object,3
+
 Software Engineer,1
 Product Manager,1
 Employee,1
@@ -20,60 +39,61 @@ Java,2
 Ruby,2
 JavaScript,2
 
-BSc Computing (1st Class),3
-MSc Software Engineering (Distinction),3
-MBCS CITP,3
-DeveloperWorks Author Award,3
-Siemens Innovation Award,3
-Calculus One,3
+BSc Computing (1st Class),2
+MSc Software Engineering (Distinction),2
+MBCS CITP,2
+DeveloperWorks Author Award,2
+Siemens Innovation Award,2
+Calculus One,2
 
-LinkedIn,4
-Twitter,4
-Github,4
-ISNI,4
-Orcid,4
-Photographs,4
+LinkedIn,2
+Twitter,2
+Github,2
+Flickr,2
 
-Mercia Software,5
-Siemens Communications,5
-IBM,5
-Digital Science,5
-Loughborough University,5
-Oxford University,5
-Coursera,5
+ISNI,2
+Orcid,2
 
-Tetsudo,6
-Rock Climbing,6
-Writing,6
-Old Computer Games,6
-Comic Books,6
-Movies,6
-Travel,6
+Mercia Software,2
+Siemens Communications,2
+IBM,2
+Digital Science,2
 
-[Journal Articles],7
-[Technical Articles],7
-[Tutorial Articles],7
-[Three Friends article],7
-POSA For Dummies,7
+Loughborough University,2
+Oxford University,2
+Coursera,2
 
-PRC text mining,8
-Boing Boing,8
-Digital Science Blog,8
-Variable Tree,8
-TPLOP,8
-IBM DeveloperWorks,8
-ObjektSpectrum,8
+Tetsudo,2
+Rock Climbing,2
+Writing,2
+Old Computer Games,2
+Comic Books,2
+Movies,2
+Travel,2
 
-[IBM patent 1],9
-[IBM patent 2],9
-IP.com,9
+[Journal Articles],2
+[Technical Articles],2
+[Tutorial Articles],2
+[Three Friends article],2
+POSA For Dummies,2
 
-[Some places],10
-iAnnotate,10
+PRC text mining,2
+Boing Boing,2
+Digital Science Blog,2
+Variable Tree,2
+TPLOP,2
+IBM DeveloperWorks,2
+ObjektSpectrum,2
 
-That's Confidential,11
+[IBM patent 1],2
+[IBM patent 2],2
+IP.com,2
 
-Curriculum Vitae,12
+[Some places],2
+iAnnotate,2
+
+Curriculum Vitae,2
+That's Confidential,2
 
 
 
