@@ -26,13 +26,13 @@
   var curr_nodes = null;
 
   // Selections used for viz management
-  var hover_edge_paths = null;
-  var hover_edge_labels = null;
+  // var hover_edge_paths = null;
+  // var hover_edge_labels = null;
 
 
   function init() {
 
-    d3.json("data/jimmy.json", function(error, json_data) {
+    d3.json("data/profile.json", function(error, json_data) {
 
       // Store original graph data
       orig_graph = json_data;
@@ -82,9 +82,8 @@
       }); 
       
 
-      // Now initialize!
+      // Now filter initial data set
       filterData(active_groups, active_personas, active_predicates);
-      updateViz();
 
     });
 
@@ -129,8 +128,8 @@
 
     $('.node').remove();
     $('.link').remove();
-    $('.shadow').remove();
     $('.label').remove();
+    $('.shadow').remove();
 
     // Use the force
     force
@@ -145,7 +144,7 @@
     lines.enter()
         .append("line")
         .attr("class", "link")
-        .style("stroke-width", function(d) { return Math.sqrt(d.value); });
+        .style("stroke-width", function(d) { return Math.sqrt(d.value); }); // Why sqrt?
     
 
     // Create circle elements, initialize via enter
@@ -161,79 +160,93 @@
         .call(force.drag);
 
 
-    var tooldiv = d3.select("body").append("div")   
-        .attr("class", "tooltip")               
-        .style("opacity", 0);
+
+
+    var tooldiv = d3.select("#tooltip");
+    var descdiv = d3.select("#description");
+
+    $(".node").mousemove(
+
+      function(e) {
+
+        node_id = $(this).attr('id');
+        node_pos = $(this).position();
+
+        node_summary = "Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters";
+
+        tool_text = "<b>"+node_id + "</b>" + "<p>" + node_summary + "</p>";
+
+        tooldiv.html( tool_text )
+        .style("left", e.pageX + "px")
+        .style("top", e.pageY + "px")
+        .style("opacity", .9);  
+
+      }
+    );
+
+
 
     $(".node").hover(
 
-          function() {
+          function(e) {
 
-              node_id = $(this).attr('id');
+            node_id = $(this).attr('id');
 
-              hov_links = all_nodes[node_id].links
+            node_description = "<p>Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters fanny pack non Terry Richardson locavore ethnic art party. You probably haven't heard of them Marfa hashtag gluten-free ennui. Art party shoreditch High Life, polaroid fashion axe ad helvetica. Occupy dolore High Life minim. Ethnic artisan Tonx 90's mlkshk lomo.</p>"
 
-node_pos = $(this).position()
-node_text = "<b>"+node_id + "</b> <p>Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters fanny pack non Terry Richardson locavore ethnic art party. You probably haven't heard of them Marfa hashtag gluten-free ennui. Art party shoreditch High Life, polaroid fashion axe ad helvetica. Occupy dolore High Life minim. Ethnic artisan Tonx 90's mlkshk lomo.</p>"
+            desc_text = "<b>"+node_id + "</b>" + "<p>" + node_description + "</p>";
 
-tooldiv.html( node_text )
-.style("left", node_pos.left + "px")
-.style("top", node_pos.top + "px");
-
-tooldiv
-.transition()        
-.duration(100)      
-.style("opacity", .9);  
+            descdiv.html( desc_text );
 
 
+              // node_id = $(this).attr('id');
 
+              // hov_links = all_nodes[node_id].links
 
-              hover_edge_paths = svg.selectAll(".edgepath")
-                    .data( hov_links )
-                    .enter()
-                    .append('path')
-                    .attr({'d': function(d) {return 'M '+d.source.x+' '+d.source.y+' L '+ d.target.x +' '+d.target.y},
-                           'class':'edgepath',
-                           'fill-opacity':0,
-                           'stroke-opacity':0,
-                           'fill':'blue',
-                           'stroke':'red',
-                           'id':function(d,i) {return 'edgepath'+i}})
-                    .style("pointer-events", "none");
+              // hover_edge_paths = svg.selectAll(".edgepath")
+              //       .data( hov_links )
+              //       .enter()
+              //       .append('path')
+              //       .attr({'d': function(d) {return 'M '+d.source.x+' '+d.source.y+' L '+ d.target.x +' '+d.target.y},
+              //              'class':'edgepath',
+              //              'fill-opacity':0,
+              //              'stroke-opacity':0,
+              //              'fill':'blue',
+              //              'stroke':'red',
+              //              'id':function(d,i) {return 'edgepath'+i}})
+              //       .style("pointer-events", "none");
 
-              // Edge labels and paths - cut and paste coding from:
-              // http://bl.ocks.org/jhb/5955887
-              hover_edge_labels = svg.selectAll(".edgelabel")
-                  .data( hov_links );
+              // // Edge labels and paths - cut and paste coding from:
+              // // http://bl.ocks.org/jhb/5955887
+              // hover_edge_labels = svg.selectAll(".edgelabel")
+              //     .data( hov_links );
 
-              hover_edge_labels.enter()
-                  .append('text')
-                  .style("pointer-events", "none")
-                  .attr({'class':'edgelabel',
-                         'id':function(d,i){return 'edgelabel'+i},
-                         'dx':20,
-                         'dy':0,
-                         'font-size':10,
-                         'fill':'#aaa'});
+              // hover_edge_labels.enter()
+              //     .append('text')
+              //     .style("pointer-events", "none")
+              //     .attr({'class':'edgelabel',
+              //            'id':function(d,i){return 'edgelabel'+i},
+              //            'dx':20,
+              //            'dy':0,
+              //            'font-size':10,
+              //            'fill':'#aaa'});
 
-              hover_edge_labels.append('textPath')
-                    .attr('xlink:href',function(d,i) {return '#edgepath'+i})
-                    .style("pointer-events", "none")
-                    .text(function(d,i){return d.pred});
+              // hover_edge_labels.append('textPath')
+              //       .attr('xlink:href',function(d,i) {return '#edgepath'+i})
+              //       .style("pointer-events", "none")
+              //       .text(function(d,i){return d.pred});
           },
 
           function() { 
 
-tooldiv
-.transition()        
-.duration(200)      
-.style("opacity", .0); 
+            tooldiv
+              .style("opacity", .0); 
 
-            $('.edgelabel').remove();
-            $('.edgepath').remove();
+            // $('.edgelabel').remove();
+            // $('.edgepath').remove();
 
-            hover_edge_labels = null;
-            hover_edge_paths = null;
+            // hover_edge_labels = null;
+            // hover_edge_paths = null;
 
           }
     );
@@ -270,29 +283,29 @@ tooldiv
           return "translate(" + d.x + "," + d.y + ")";
       });
 
-      if (hover_edge_paths != null) {
+      // if (hover_edge_paths != null) {
 
-        // Edge labels and paths - C&P from online sample
-        hover_edge_paths.attr('d', function(d) { 
-            var path='M '+d.source.x+' '+d.source.y+' L '+ d.target.x +' '+d.target.y;
-            return path}); 
+      //   // Edge labels and paths - C&P from online sample
+      //   hover_edge_paths.attr('d', function(d) { 
+      //       var path='M '+d.source.x+' '+d.source.y+' L '+ d.target.x +' '+d.target.y;
+      //       return path}); 
 
-      }
+      // }
 
-      if (hover_edge_labels != null) {
+      // if (hover_edge_labels != null) {
 
-        hover_edge_labels.attr('transform',function(d,i) {
-            if (d.target.x<d.source.x){
-              bbox = this.getBBox();
-              rx = bbox.x+bbox.width/2;
-              ry = bbox.y+bbox.height/2;
-              return 'rotate(180 '+rx+' '+ry+')';
-            }
-            else {
-              return 'rotate(0)';
-            }
-        });
-      }
+      //   hover_edge_labels.attr('transform',function(d,i) {
+      //       if (d.target.x<d.source.x){
+      //         bbox = this.getBBox();
+      //         rx = bbox.x+bbox.width/2;
+      //         ry = bbox.y+bbox.height/2;
+      //         return 'rotate(180 '+rx+' '+ry+')';
+      //       }
+      //       else {
+      //         return 'rotate(0)';
+      //       }
+      //   });
+      // }
 
     });
 
@@ -307,6 +320,7 @@ tooldiv
   }
 
   init();
+  updateViz();
 
 
 
