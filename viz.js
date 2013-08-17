@@ -174,7 +174,7 @@
               hov_links = all_nodes[node_id].links
 
 node_pos = $(this).position()
-node_text = "<b>"+node_id + "</b> <p>Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters fanny pack non Terry Richardson locavore ethnic art party. You probably haven't heard of them Marfa hashtag gluten-free ennui. Art party shoreditch High Life, polaroid fashion axe ad helvetica. Occupy dolore High Life minim. Ethnic artisan Tonx 90's mlkshk lomo. Asymmetrical hashtag quis exercitation swag, jean shorts Carles cliche kitsch polaroid photo booth duis. Seitan tempor +1, eu duis biodiesel nulla roof party Pinterest street art polaroid sapiente.</p>"
+node_text = "<b>"+node_id + "</b> <p>Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters fanny pack non Terry Richardson locavore ethnic art party. You probably haven't heard of them Marfa hashtag gluten-free ennui. Art party shoreditch High Life, polaroid fashion axe ad helvetica. Occupy dolore High Life minim. Ethnic artisan Tonx 90's mlkshk lomo.</p>"
 
 tooldiv.html( node_text )
 .style("left", node_pos.left + "px")
