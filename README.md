@@ -4,14 +4,14 @@ grapheme
 Graph-based vizualization of personal information
 
 TODO
-====
+----
 
 Add sidebar per thing
 Add description per thing
 Add description per relationship?
 
 Top level views
-===============
+---------------
 
 Just entities
 Personas + entities
@@ -20,7 +20,7 @@ Everything
 
 
 MISC IDEAS
-==========
+----------
 
 Define facts to capture
 Generate full data set
