@@ -51,8 +51,6 @@
       });
 
       // Deduce list of groups, and create group buttons
-      $("#options").append("<br>")
-
       $.each(json_data.groups, function(index, group) {
 
         button_id = "group_selector_" + group.id;
@@ -161,27 +159,27 @@
 
 
 
-    var tooldiv = d3.select("#tooltip");
+//    var tooldiv = d3.select("#tooltip");
     var descdiv = d3.select("#description");
 
-    $(".node").mousemove(
+    // $(".node").mousemove(
 
-      function(e) {
+    //   function(e) {
 
-        node_id = $(this).attr('id');
-        node_pos = $(this).position();
+    //     node_id = $(this).attr('id');
+    //     node_pos = $(this).position();
 
-        node_summary = "Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters";
+    //     node_summary = "Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters";
 
-        tool_text = "<b>"+node_id + "</b>" + "<p>" + node_summary + "</p>";
+    //     tool_text = "<b>"+node_id + "</b>" + "<p>" + node_summary + "</p>";
 
-        tooldiv.html( tool_text )
-        .style("left", e.pageX + "px")
-        .style("top", e.pageY + "px")
-        .style("opacity", .9);  
+    //     tooldiv.html( tool_text )
+    //     .style("left", e.pageX + "px")
+    //     .style("top", e.pageY + "px")
+    //     .style("opacity", .9);  
 
-      }
-    );
+    //   }
+    // );
 
     $(".node").hover(
 
@@ -195,12 +193,16 @@
         node_link_text = ""
 
         $.each(node_links, function(index, link) {
-          node_link_text += link.source.name + " " + link.pred + " " + link.target.name + "<br>";
+
+          node_link_text += 
+            "<b>" + link.source.name + "</b>" + 
+            " "   + link.pred + " " + 
+            "<b>" + link.target.name + "</b><br>";
+
         });
 
-
         descdiv.html( 
-          "<b>" + node_id + "</b>" + 
+          "<h2>" + node_id + "</h2>" + 
           "<p>" + node_description + "</p>" + 
           "<p>" + node_link_text + "</p>" );
 
@@ -208,7 +210,7 @@
 
       function() { 
 
-        tooldiv.style("opacity", .0); 
+        //tooldiv.style("opacity", .0); 
 
       }
     );

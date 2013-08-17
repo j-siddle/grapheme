@@ -1,3 +1,7 @@
+div {
+  font: 12px sans-serif;        
+}
+
 .node {
   stroke: #fff;
   stroke-width: 1.5px;
@@ -18,7 +22,6 @@
   width: 150px;                  
   height: 28px;                 
   padding: 2px;             
-  font: 12px sans-serif;        
   background: lightsteelblue;   
   border: 0px;      
   border-radius: 8px;           
@@ -29,7 +32,6 @@
 
 
 text {
-  font: 12px sans-serif;
   pointer-events: none;
 }
 
