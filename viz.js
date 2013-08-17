@@ -159,39 +159,63 @@
 
 
 
-//    var tooldiv = d3.select("#tooltip");
+    // var tooldiv = d3.select("#tooltip");
     var descdiv = d3.select("#description");
 
     // $(".node").mousemove(
-
+    //
     //   function(e) {
-
+    //
     //     node_id = $(this).attr('id');
     //     node_pos = $(this).position();
-
+    //
     //     node_summary = "Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters";
-
+    //
     //     tool_text = "<b>"+node_id + "</b>" + "<p>" + node_summary + "</p>";
-
+    //
     //     tooldiv.html( tool_text )
     //     .style("left", e.pageX + "px")
     //     .style("top", e.pageY + "px")
     //     .style("opacity", .9);  
-
     //   }
     // );
+
+    var focus_node = null;
+    var focus_link_sel = null;
+
 
     $(".node").hover(
 
       function(e) {
 
+        // Reset previous hover highlights
+        if (focus_node != null) {
+          focus_node.attr('r',10)
+        }
+
+        if (focus_link_sel != null) {
+          focus_link_sel
+            .style("opacity", .6)
+            .style("stroke", "#999");
+        }
+
+        // Capture new JQ / D3 focus objects
+        focus_node = $(this);
         node_id = $(this).attr('id');
 
-        node_description = "<p>Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters fanny pack non Terry Richardson locavore ethnic art party. You probably haven't heard of them Marfa hashtag gluten-free ennui. Art party shoreditch High Life, polaroid fashion axe ad helvetica. Occupy dolore High Life minim. Ethnic artisan Tonx 90's mlkshk lomo.</p>"
+        var link_selection = d3.selectAll('.link');
+        focus_link_sel = link_selection.filter(
+          function(d, i) { 
+            return (d.source.name == node_id || d.target.name == node_id)  }
+        )
 
-        node_links = all_nodes[node_id].links
+        // Highlight the node and links, then update description
+        $(this).attr('r',14)
+
+        node_description = "<p>Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters fanny pack non Terry Richardson locavore ethnic art party. You probably haven't heard of them Marfa hashtag gluten-free ennui. Art party shoreditch High Life, polaroid fashion axe ad helvetica. Occupy dolore High Life minim. Ethnic artisan Tonx 90's mlkshk lomo.</p>"
         node_link_text = ""
 
+        node_links = all_nodes[node_id].links
         $.each(node_links, function(index, link) {
 
           node_link_text += 
@@ -206,12 +230,13 @@
           "<p>" + node_description + "</p>" + 
           "<p>" + node_link_text + "</p>" );
 
+        focus_link_sel
+          .style("opacity", 1)
+          .style("stroke", "#000");
+
       },
 
       function() { 
-
-        //tooldiv.style("opacity", .0); 
-
       }
     );
 
@@ -231,6 +256,7 @@
         .attr("y", ".31em")
         .attr("class", "label")
         .text(function(d) { return d.name; });
+
 
     // Define how SVG elements react to force tick events
     force.on("tick", function() {
