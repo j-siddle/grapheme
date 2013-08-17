@@ -10,6 +10,15 @@ Add sidebar per thing
 Add description per thing
 Add description per relationship?
 
+Top level views
+===============
+
+Just entities
+Personas + entities
+Classes + entities
+Everything
+
+
 MISC IDEAS
 ==========
 
