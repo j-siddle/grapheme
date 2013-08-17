@@ -1,47 +1,3 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
-
-<style>
-
-  .node {
-    stroke: #fff;
-    stroke-width: 1.5px;
-  }
-
-  .link {
-    stroke: #999;
-    stroke-opacity: .6;
-  }
-
-  text {
-    font: 12px sans-serif;
-    pointer-events: none;
-  }
-
-  text.shadow {
-    stroke: #fff;
-    stroke-width: 3px;
-    stroke-opacity: .8;
-  }
-
-</style>
-
-
-<body>
-
-  <div id="options">
-      <input name="resetButton" type="button" value="Reset" onclick="reset()" />
-  </div>
-
-  <div id="viz"></div>
-  <div id="desc"></div>
-
-
-  <script src="d3.v3.min.js"></script>
-  <script src="jquery-1.10.2.min.js"></script>
-
-  <script>
-
   var width = 960,
       height = 700;
 
@@ -76,7 +32,7 @@
 
   function init() {
 
-    d3.json("jimmy.json", function(error, json_data) {
+    d3.json("data/jimmy.json", function(error, json_data) {
 
       // Store original graph data
       orig_graph = json_data;
@@ -324,100 +280,98 @@
 
   init();
 
-  </script>
-
-</body>
 
 
 
 
-<!--
+/*
 
 **************
 CODE FRAGMENTS
 **************
 
 
-      PERSONA SELECTORS - init()
+PERSONA SELECTORS - init()
 
-            $("#options").append("<br>")
-            
-            numeric_node_index = 1;
-            $.each(all_nodes, function(index, node) {
+  $("#options").append("<br>")
+  
+  numeric_node_index = 1;
+  $.each(all_nodes, function(index, node) {
 
-              if (node.group == 1) {
+    if (node.group == 1) {
 
-                button_id = "persona_selector_" + numeric_node_index;
-                numeric_node_index ++;
-                $("#options").append(
-                  "<input type='checkbox' class='persona_selector' id='"+button_id+"' value='"+node.name+"'>"
-                  +node.name );
+      button_id = "persona_selector_" + numeric_node_index;
+      numeric_node_index ++;
+      $("#options").append(
+        "<input type='checkbox' class='persona_selector' id='"+button_id+"' value='"+node.name+"'>"
+        +node.name );
 
-                $("#"+button_id).change( function() {
+      $("#"+button_id).change( function() {
 
-                  sel_persona = $(this).val();
-                  $(this).is(':checked') ? active_personas[sel_persona] = true : delete active_personas[sel_persona] ;
+        sel_persona = $(this).val();
+        $(this).is(':checked') ? active_personas[sel_persona] = true : delete active_personas[sel_persona] ;
 
-                  // Refresh graph data, then update the vizualization
-                  filterData(active_groups, active_personas, active_predicates);
-                  updateViz();
+        // Refresh graph data, then update the vizualization
+        filterData(active_groups, active_personas, active_predicates);
+        updateViz();
 
-                }); 
-              }
+      }); 
+    }
 
-            });
-
-
-
-
-      PREDICATE SELECTORS - init()
-
-      options").append("<br>")
-
-      $.each(json_data.predicates, function(index, predicate) {
-
-        active_predicates[predicate.id] = true;
-
-        $("#options").append(
-          "<input type='checkbox' checked id='"+predicate.id+"' value='"+predicate.id+"'>"
-          +predicate.name
-          )
-        $("#"+predicate.id).change( function() {
-
-          sel_pred = $(this).val();
-          $(this).is(':checked') ? active_predicates[sel_pred] = true : delete active_predicates[sel_pred] ;
-
-          // Refresh graph data, then update the vizualization
-          filterData(active_groups, active_personas, active_predicates);
-          updateViz();
-
-        });
-        
-      });
-
-      
+  });
 
 
 
-      TOOLTIP
 
-      var tooltip = d3.select("body")
-        .append("div")
-        .style("position", "absolute")
-        .style("z-index", "10")
-        .style("visibility", "hidden")
-        .text("a simple tooltip");
+PREDICATE SELECTORS - init()
 
-      node
-        .on("mouseover", function(d) { 
-          return tooltip.style("visibility", "visible").text(d.name);
-        })
-        .on("mousemove", function() {return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
-        .on("mouseout", function()  {return tooltip.style("visibility", "hidden");});
+  options").append("<br>")
+
+  $.each(json_data.predicates, function(index, predicate) {
+
+    active_predicates[predicate.id] = true;
+
+    $("#options").append(
+      "<input type='checkbox' checked id='"+predicate.id+"' value='"+predicate.id+"'>"
+      +predicate.name
+      )
+    $("#"+predicate.id).change( function() {
+
+      sel_pred = $(this).val();
+      $(this).is(':checked') ? active_predicates[sel_pred] = true : delete active_predicates[sel_pred] ;
+
+      // Refresh graph data, then update the vizualization
+      filterData(active_groups, active_personas, active_predicates);
+      updateViz();
+
+    });
+    
+  });
 
 
 
--->
+
+
+TOOLTIP
+
+  var tooltip = d3.select("body")
+    .append("div")
+    .style("position", "absolute")
+    .style("z-index", "10")
+    .style("visibility", "hidden")
+    .text("a simple tooltip");
+
+  node
+    .on("mouseover", function(d) { 
+      return tooltip.style("visibility", "visible").text(d.name);
+    })
+    .on("mousemove", function() {return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+    .on("mouseout", function()  {return tooltip.style("visibility", "hidden");});
+
+
+
+*/
+
 
 
 
