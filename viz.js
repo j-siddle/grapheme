@@ -25,9 +25,6 @@
   var curr_links = null;
   var curr_nodes = null;
 
-  // Selections used for viz management
-  // var hover_edge_paths = null;
-  // var hover_edge_labels = null;
 
 
   function init() {
@@ -162,6 +159,8 @@
 
 
 
+
+
     var tooldiv = d3.select("#tooltip");
     var descdiv = d3.select("#description");
 
@@ -184,71 +183,34 @@
       }
     );
 
-
-
     $(".node").hover(
 
-          function(e) {
+      function(e) {
 
-            node_id = $(this).attr('id');
+        node_id = $(this).attr('id');
 
-            node_description = "<p>Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters fanny pack non Terry Richardson locavore ethnic art party. You probably haven't heard of them Marfa hashtag gluten-free ennui. Art party shoreditch High Life, polaroid fashion axe ad helvetica. Occupy dolore High Life minim. Ethnic artisan Tonx 90's mlkshk lomo.</p>"
+        node_description = "<p>Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters fanny pack non Terry Richardson locavore ethnic art party. You probably haven't heard of them Marfa hashtag gluten-free ennui. Art party shoreditch High Life, polaroid fashion axe ad helvetica. Occupy dolore High Life minim. Ethnic artisan Tonx 90's mlkshk lomo.</p>"
 
-            desc_text = "<b>"+node_id + "</b>" + "<p>" + node_description + "</p>";
+        node_links = all_nodes[node_id].links
+        node_link_text = ""
 
-            descdiv.html( desc_text );
+        $.each(node_links, function(index, link) {
+          node_link_text += link.source.name + " " + link.pred + " " + link.target.name + "<br>";
+        });
 
 
-              // node_id = $(this).attr('id');
+        descdiv.html( 
+          "<b>" + node_id + "</b>" + 
+          "<p>" + node_description + "</p>" + 
+          "<p>" + node_link_text + "</p>" );
 
-              // hov_links = all_nodes[node_id].links
+      },
 
-              // hover_edge_paths = svg.selectAll(".edgepath")
-              //       .data( hov_links )
-              //       .enter()
-              //       .append('path')
-              //       .attr({'d': function(d) {return 'M '+d.source.x+' '+d.source.y+' L '+ d.target.x +' '+d.target.y},
-              //              'class':'edgepath',
-              //              'fill-opacity':0,
-              //              'stroke-opacity':0,
-              //              'fill':'blue',
-              //              'stroke':'red',
-              //              'id':function(d,i) {return 'edgepath'+i}})
-              //       .style("pointer-events", "none");
+      function() { 
 
-              // // Edge labels and paths - cut and paste coding from:
-              // // http://bl.ocks.org/jhb/5955887
-              // hover_edge_labels = svg.selectAll(".edgelabel")
-              //     .data( hov_links );
+        tooldiv.style("opacity", .0); 
 
-              // hover_edge_labels.enter()
-              //     .append('text')
-              //     .style("pointer-events", "none")
-              //     .attr({'class':'edgelabel',
-              //            'id':function(d,i){return 'edgelabel'+i},
-              //            'dx':20,
-              //            'dy':0,
-              //            'font-size':10,
-              //            'fill':'#aaa'});
-
-              // hover_edge_labels.append('textPath')
-              //       .attr('xlink:href',function(d,i) {return '#edgepath'+i})
-              //       .style("pointer-events", "none")
-              //       .text(function(d,i){return d.pred});
-          },
-
-          function() { 
-
-            tooldiv
-              .style("opacity", .0); 
-
-            // $('.edgelabel').remove();
-            // $('.edgepath').remove();
-
-            // hover_edge_labels = null;
-            // hover_edge_paths = null;
-
-          }
+      }
     );
 
     // Create one SVG group per node element, for labels
@@ -282,30 +244,6 @@
       labels.attr("transform", function(d) {
           return "translate(" + d.x + "," + d.y + ")";
       });
-
-      // if (hover_edge_paths != null) {
-
-      //   // Edge labels and paths - C&P from online sample
-      //   hover_edge_paths.attr('d', function(d) { 
-      //       var path='M '+d.source.x+' '+d.source.y+' L '+ d.target.x +' '+d.target.y;
-      //       return path}); 
-
-      // }
-
-      // if (hover_edge_labels != null) {
-
-      //   hover_edge_labels.attr('transform',function(d,i) {
-      //       if (d.target.x<d.source.x){
-      //         bbox = this.getBBox();
-      //         rx = bbox.x+bbox.width/2;
-      //         ry = bbox.y+bbox.height/2;
-      //         return 'rotate(180 '+rx+' '+ry+')';
-      //       }
-      //       else {
-      //         return 'rotate(0)';
-      //       }
-      //   });
-      // }
 
     });
 
