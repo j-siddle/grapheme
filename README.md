@@ -6,9 +6,11 @@ Graph-based vizualization of personal information
 TODO
 ----
 
-* Add sidebar per thing
 * Add description per thing
 * Add description per relationship?
+* Add degree scaling for nodes (+links?)
+* Add predicate colours
+* Add transitions / animation
 
 Top level views
 ---------------

@@ -209,7 +209,7 @@
         }
 
         if (focus_link_sel != null) {
-          focus_link_sel
+          focus_link_sel.transition().duration(350)
             .style("opacity", .6)
             .style("stroke", "#999");
         }
@@ -247,9 +247,10 @@
           "<p>" + node_description + "</p>" + 
           "<p>" + node_link_text + "</p>" );
 
-        focus_link_sel
+        focus_link_sel.transition().duration(350)
           .style("opacity", 1)
-          .style("stroke", "#000");
+          .style("stroke", "#000")
+          .style("stroke-width", "2px");
 
       },
 
