@@ -219,68 +219,63 @@
     //   }
     // );
 
-    var focus_node = null;
-    var focus_link_sel = null;
+    var focus_circle = null;
+    var focus_links = null;
 
+    circles.on("mouseover", function() {
 
-    $(".node").hover(
-
-      function(e) {
-
-        // Reset previous hover highlights
-        if (focus_node != null) {
-          focus_node.attr('r',10)
-        }
-
-        if (focus_link_sel != null) {
-          focus_link_sel.transition().duration(350)
-            .style("opacity", .6)
-            .style("stroke", "#999");
-        }
-
-        // Capture new JQ / D3 focus objects
-        focus_node = $(this);
-        node_id = $(this).attr('id');
-
-        var link_selection = d3.selectAll('.link');
-        focus_link_sel = link_selection.filter(
-          function(d, i) { 
-            return (d.source.name == node_id || d.target.name == node_id)  }
-        )
-
-        // Highlight the node and links, then update description
-        $(this).attr('r',14)
-
-        node_description = "<p>Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters fanny pack non Terry Richardson locavore ethnic art party. You probably haven't heard of them Marfa hashtag gluten-free ennui. Art party shoreditch High Life, polaroid fashion axe ad helvetica. Occupy dolore High Life minim. Ethnic artisan Tonx 90's mlkshk lomo.</p>"
-        node_link_text = ""
-
-        node_links = all_nodes[node_id].links
-        $.each(node_links, function(index, link) {
-
-          if (link.pred in active_predicates) {
-            node_link_text += 
-              "<b>" + link.source.name + "</b>" + 
-              " "   + link.pred + " " + 
-              "<b>" + link.target.name + "</b><br>";
-          }
-
-        });
-
-        descdiv.html( 
-          "<h2>" + node_id + "</h2>" + 
-          "<p>" + node_description + "</p>" + 
-          "<p>" + node_link_text + "</p>" );
-
-        focus_link_sel.transition().duration(350)
-          .style("opacity", 1)
-          .style("stroke", "#000")
-          .style("stroke-width", "2px");
-
-      },
-
-      function() { 
+      // Reset previous hover highlights
+      if (focus_circle != null) {          
+        focus_circle.transition().duration(350).attr('r',10)
       }
-    );
+      if (focus_links != null) {
+        focus_links.transition().duration(350)
+          .style("opacity", .6)
+          .style("stroke", "#999");
+      }
+
+      // Determine focus circle selection, node ID
+      focus_circle = d3.select(this);
+      focus_node_id = focus_circle.attr('id');      
+
+      // Transition focus circle style
+      focus_circle.transition().duration(350).attr('r',20)
+
+      // Determine focus links
+      focus_links = d3.selectAll('.link').filter(
+        function(d, i) { 
+          return (d.source.name == focus_node_id || d.target.name == focus_node_id)  }
+      )
+
+      // Transition link style
+      focus_links.transition().duration(350)
+        .style("opacity", 1)
+        .style("stroke", "#000")
+        .style("stroke-width", "2px");
+
+      // Update description / link box
+      node_description = "<p>Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters fanny pack non Terry Richardson locavore ethnic art party. You probably haven't heard of them Marfa hashtag gluten-free ennui. Art party shoreditch High Life, polaroid fashion axe ad helvetica. Occupy dolore High Life minim. Ethnic artisan Tonx 90's mlkshk lomo.</p>"
+      node_link_text = ""
+
+      node_links = all_nodes[focus_node_id].links
+      $.each(node_links, function(index, link) {
+
+        if (link.pred in active_predicates) {
+          node_link_text += 
+            "<b>" + link.source.name + "</b>" + 
+            " "   + link.pred + " " + 
+            "<b>" + link.target.name + "</b><br>";
+        }
+
+      });
+
+      descdiv.html( 
+        "<h2>" + focus_node_id + "</h2>" + 
+        "<p>" + node_description + "</p>" + 
+        "<p>" + node_link_text + "</p>" );
+
+    });
+
 
     // Create one SVG group per node element, for labels
     var labels = svg.append("svg:g").selectAll(".labels")
