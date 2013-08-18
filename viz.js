@@ -71,11 +71,30 @@
         });
       });
 
-      // Make all predicates active, for now ... 
+
+      // Provide predicate selectors for expert mode
+      $("#options").append("<br><br>")
+
       $.each(json_data.predicates, function(index, predicate) {
+
         active_predicates[predicate.id] = true;
-      }); 
-      
+
+        $("#options").append(
+          "<input type='checkbox' checked id='"+predicate.id+"' value='"+predicate.id+"'>"
+          +predicate.name)
+
+        $("#"+predicate.id).change( function() {
+
+          sel_pred = $(this).val();
+          $(this).is(':checked') ? active_predicates[sel_pred] = true : delete active_predicates[sel_pred] ;
+
+          // Refresh graph data, then update the vizualization
+          filterData(active_groups, active_personas, active_predicates);
+          updateViz();
+
+        });
+        
+      });
 
       // Now filter initial data set
       filterData(active_groups, active_personas, active_predicates);
@@ -156,10 +175,7 @@
 
 
 
-
-
-
-    // var tooldiv = d3.select("#tooltip");
+    //var tooldiv = d3.select("#tooltip");
     var descdiv = d3.select("#description");
 
     // $(".node").mousemove(
@@ -168,7 +184,6 @@
     //
     //     node_id = $(this).attr('id');
     //     node_pos = $(this).position();
-    //
     //     node_summary = "Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters";
     //
     //     tool_text = "<b>"+node_id + "</b>" + "<p>" + node_summary + "</p>";
@@ -218,10 +233,12 @@
         node_links = all_nodes[node_id].links
         $.each(node_links, function(index, link) {
 
-          node_link_text += 
-            "<b>" + link.source.name + "</b>" + 
-            " "   + link.pred + " " + 
-            "<b>" + link.target.name + "</b><br>";
+          if (link.pred in active_predicates) {
+            node_link_text += 
+              "<b>" + link.source.name + "</b>" + 
+              " "   + link.pred + " " + 
+              "<b>" + link.target.name + "</b><br>";
+          }
 
         });
 
@@ -327,35 +344,6 @@ PERSONA SELECTORS - init()
     }
 
   });
-
-
-
-
-PREDICATE SELECTORS - init()
-
-  options").append("<br>")
-
-  $.each(json_data.predicates, function(index, predicate) {
-
-    active_predicates[predicate.id] = true;
-
-    $("#options").append(
-      "<input type='checkbox' checked id='"+predicate.id+"' value='"+predicate.id+"'>"
-      +predicate.name
-      )
-    $("#"+predicate.id).change( function() {
-
-      sel_pred = $(this).val();
-      $(this).is(':checked') ? active_predicates[sel_pred] = true : delete active_predicates[sel_pred] ;
-
-      // Refresh graph data, then update the vizualization
-      filterData(active_groups, active_personas, active_predicates);
-      updateViz();
-
-    });
-    
-  });
-
 
 
 
