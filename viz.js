@@ -26,7 +26,8 @@
   var curr_nodes = null;
 
 
-
+  /* Prepare data model, create selection buttons and 
+     behaviour, perform initial filter */
   function init() {
 
     d3.json("data/profile.json", function(error, json_data) {
@@ -49,6 +50,8 @@
       orig_graph.nodes.forEach(function(node) {
         all_nodes[node.name]["group"] = node["group"];
       });
+
+      $("#options").append("<br>")
 
       // Deduce list of groups, and create group buttons
       $.each(json_data.groups, function(index, group) {
@@ -104,23 +107,16 @@
   }
 
 
-
+  /* Given the selected groups, personas, and predicates,
+     filter viz data to find current nodes and links */
   function filterData(sel_groups, sel_personas, sel_predicates) {
 
-    // Initialize the graph. 
+    // Clear lists of nodes and links
     curr_nodes = [];
     curr_links = [];
 
-    $.each(all_nodes, function(index, node) {
-
-      if (node.group == 1 && node.name in sel_personas) {
-        curr_nodes.push(node); 
-      }
-      else if (node.group in sel_groups ) {
-        curr_nodes.push(node); 
-      } 
-
-    });
+    // Define the links to include
+    var connected_set = {}
 
     $.each(orig_graph.links, function(index, link) {
 
@@ -131,13 +127,41 @@
 
       if (nodes_allowed && link.pred in sel_predicates) {
         curr_links.push(link); 
+        connected_set[link.source.name] = link.source;
+        connected_set[link.target.name] = link.target;
       }
 
     });
+
+    // Define nodes ... either according to selected groups / personas
+    // or according to the connected set
+    console.log( $('#singletonChoice').is(":checked") )
+    if ( $('#singletonChoice').is(":checked") == true ) {
+
+      $.each(all_nodes, function(index, node) {
+
+        if (node.group == 1 && node.name in sel_personas) {
+          curr_nodes.push(node); 
+        }
+        else if (node.group in sel_groups ) {
+          curr_nodes.push(node); 
+        } 
+
+      });
+
+    } else {
+
+      for (var key in connected_set) {
+        curr_nodes.push(connected_set[key]);
+      }
+
+    }
+
   }
 
 
-
+  /* Create visualization elements, define hover behaviour,
+     define force graph tick behaviour */
   function updateViz() {
 
     $('.node').remove();
@@ -303,6 +327,13 @@
     updateViz( );
   }
 
+  function refresh() {
+    filterData(active_groups, active_personas, active_predicates);
+    updateViz( );
+  }
+
+
+  // Initialize, then update visualization
   init();
   updateViz();
 
