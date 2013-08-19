@@ -192,7 +192,7 @@
     lines.enter()
         .append("line")
         .attr("class", "link")
-        .style("stroke-width", function(d) { return Math.sqrt(d.value); }); // Why sqrt?
+    //    .style("stroke-width", function(d) { return Math.sqrt(d.value); }); // Why sqrt?
     
 
     // Create circle elements, initialize via enter
@@ -237,27 +237,29 @@
       // Reset previous hover highlights
       if (focus_circle != null) {          
         focus_circle.transition().duration(hover_trans_ms)
-        .style('stroke', '#fff')
+        .style("stroke-width", "0px");
       }
       if (focus_links != null) {
         focus_links.transition().duration(hover_trans_ms)
           .style("opacity", .6)
-          .style("stroke", "#999");
+          .style("stroke", "#999")
+          .style("stroke-width", "1px");
       }
 
       // Determine focus circle selection, node ID
       focus_circle = d3.select(this);
       focus_node_id = focus_circle.attr('id');      
 
-      // Transition focus circle style
-      focus_circle.transition().duration(hover_trans_ms)
-      .style('stroke', '#000')
-
       // Determine focus links
       focus_links = d3.selectAll('.link').filter(
         function(d, i) { 
           return (d.source.name == focus_node_id || d.target.name == focus_node_id)  }
       )
+
+      // Transition focus circle style
+      focus_circle.transition().duration(hover_trans_ms)
+        .style('stroke', '#000')
+        .style("stroke-width", "2px");
 
       // Transition link style
       focus_links.transition().duration(hover_trans_ms)
@@ -323,8 +325,6 @@
       });
 
     });
-
-
 
   };
 
