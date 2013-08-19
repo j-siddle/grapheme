@@ -18,6 +18,7 @@
   var orig_graph = null;
   var all_nodes = {};
   var all_groups = {};
+  var node_details = {};
 
   // User selections
   var active_groups = {};
@@ -107,6 +108,10 @@
       // Now filter initial data set
       filterData(active_groups, active_personas, active_predicates);
 
+    });
+
+    $.getJSON('data/node_details.json', function(data) {
+      node_details = data;
     });
 
   }
@@ -261,7 +266,7 @@
         .style("stroke-width", "2px");
 
       // Update description / link box
-      node_description = "<p>Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters fanny pack non Terry Richardson locavore ethnic art party. You probably haven't heard of them Marfa hashtag gluten-free ennui. Art party shoreditch High Life, polaroid fashion axe ad helvetica. Occupy dolore High Life minim. Ethnic artisan Tonx 90's mlkshk lomo.</p>"
+      node_description = node_details[focus_node_id] || "<p>Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters fanny pack non Terry Richardson locavore ethnic art party. You probably haven't heard of them Marfa hashtag gluten-free ennui. Art party shoreditch High Life, polaroid fashion axe ad helvetica. Occupy dolore High Life minim. Ethnic artisan Tonx 90's mlkshk lomo.</p>"
       node_link_text = ""
 
       node_links = all_nodes[focus_node_id].links
