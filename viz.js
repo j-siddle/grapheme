@@ -198,7 +198,7 @@
         .append("circle")
         .attr("class", "node")
         .attr("id", function(d) { return d.name; } )
-        .attr("r", 10)
+        .attr("r", function(d) { return 5 + d.links.length; } )
         .style("fill", function(d) { return all_groups[d.group].color })
         .call(force.drag);
 
@@ -232,7 +232,6 @@
       // Reset previous hover highlights
       if (focus_circle != null) {          
         focus_circle.transition().duration(hover_trans_ms)
-        .attr('r',10)
         .style('stroke', '#fff')
       }
       if (focus_links != null) {
@@ -247,7 +246,6 @@
 
       // Transition focus circle style
       focus_circle.transition().duration(hover_trans_ms)
-      .attr('r',14)
       .style('stroke', '#000')
 
       // Determine focus links
