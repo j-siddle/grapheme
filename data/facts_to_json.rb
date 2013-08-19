@@ -7,15 +7,13 @@ require("set");
 group_array = []
 File.open( "raw_groups.csv" ).each do |line|
 
-	puts line
-
 	fields = line.split(',')
 
-	if fields.size != 2
+	if fields.size != 3
 		next
 	end
 
-	group_array << { :name => fields[0], :id => fields[1].strip }
+	group_array << { :name => fields[0], :id => fields[1], :color => fields[2] }
 
 end
 

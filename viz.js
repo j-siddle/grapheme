@@ -1,7 +1,9 @@
   var width = 960,
       height = 700;
 
-  var color = d3.scale.category20();
+  var hover_trans_ms = 200;
+
+  //var color = d3.scale.category20();
 
   var force = d3.layout.force()
       .charge(-220)
@@ -15,6 +17,7 @@
   // The complete data...
   var orig_graph = null;
   var all_nodes = {};
+  var all_groups = {};
 
   // User selections
   var active_groups = {};
@@ -55,6 +58,8 @@
 
       // Deduce list of groups, and create group buttons
       $.each(json_data.groups, function(index, group) {
+
+        all_groups[group.id] = group;
 
         button_id = "group_selector_" + group.id;
 
@@ -194,7 +199,7 @@
         .attr("class", "node")
         .attr("id", function(d) { return d.name; } )
         .attr("r", 10)
-        .style("fill", function(d) { return color(d.group); })
+        .style("fill", function(d) { return all_groups[d.group].color })
         .call(force.drag);
 
 
@@ -226,10 +231,10 @@
 
       // Reset previous hover highlights
       if (focus_circle != null) {          
-        focus_circle.transition().duration(350).attr('r',10)
+        focus_circle.transition().duration(hover_trans_ms).attr('r',10)
       }
       if (focus_links != null) {
-        focus_links.transition().duration(350)
+        focus_links.transition().duration(hover_trans_ms)
           .style("opacity", .6)
           .style("stroke", "#999");
       }
@@ -239,7 +244,7 @@
       focus_node_id = focus_circle.attr('id');      
 
       // Transition focus circle style
-      focus_circle.transition().duration(350).attr('r',20)
+      focus_circle.transition().duration(hover_trans_ms).attr('r',14)
 
       // Determine focus links
       focus_links = d3.selectAll('.link').filter(
@@ -248,7 +253,7 @@
       )
 
       // Transition link style
-      focus_links.transition().duration(350)
+      focus_links.transition().duration(hover_trans_ms)
         .style("opacity", 1)
         .style("stroke", "#000")
         .style("stroke-width", "2px");
