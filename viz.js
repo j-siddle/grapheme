@@ -231,7 +231,9 @@
 
       // Reset previous hover highlights
       if (focus_circle != null) {          
-        focus_circle.transition().duration(hover_trans_ms).attr('r',10)
+        focus_circle.transition().duration(hover_trans_ms)
+        .attr('r',10)
+        .style('stroke', '#fff')
       }
       if (focus_links != null) {
         focus_links.transition().duration(hover_trans_ms)
@@ -244,7 +246,9 @@
       focus_node_id = focus_circle.attr('id');      
 
       // Transition focus circle style
-      focus_circle.transition().duration(hover_trans_ms).attr('r',14)
+      focus_circle.transition().duration(hover_trans_ms)
+      .attr('r',14)
+      .style('stroke', '#000')
 
       // Determine focus links
       focus_links = d3.selectAll('.link').filter(

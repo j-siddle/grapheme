@@ -9,11 +9,13 @@ TODO
 * Add description per thing
 * Add description per relationship?
 * Add degree scaling for nodes (+links?)
+* Make predicates clearer
 * Add predicate colours
-* Add transitions / animation
+* Add click focus
+* Create view mechanism
 
-Top level views
----------------
+Specific views
+--------------
 
 * Just entities
 * Personas + entities
