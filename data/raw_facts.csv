@@ -97,7 +97,7 @@ Siemens Innovation Award,is_a,Award
 Calculus One,is_a,Award
 Machine Learning,is_a,Award
 
-Online Course,is_a,Online Course
+Calculus One,is_a,Online Course
 Machine Learning,is_a,Online Course
 
 LinkedIn,is_a,Online Presence
