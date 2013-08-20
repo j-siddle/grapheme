@@ -31,7 +31,7 @@
 
 
   /* Prepare data model, create selection buttons and 
-     behaviour, perform initial filter */
+     behaviour, request initial filter */
   function init() {
 
     d3.json("data/profile.json", function(error, json_data) {
@@ -170,6 +170,9 @@
   }
 
 
+  
+
+
   /* Create visualization elements, define hover behaviour,
      define force graph tick behaviour */
   function updateViz() {
@@ -207,10 +210,13 @@
         .style("fill", function(d) { return all_groups[d.group].color })
         .call(force.drag);
 
+    circles.on("mouseover", function() { 
+      selectNode(d3.select(this)) 
+    });
+
 
 
     //var tooldiv = d3.select("#tooltip");
-    var descdiv = d3.select("#description");
 
     // $(".node").mousemove(
     //
@@ -229,66 +235,6 @@
     //   }
     // );
 
-    var focus_circle = null;
-    var focus_links = null;
-
-    circles.on("mouseover", function() {
-
-      // Reset previous hover highlights
-      if (focus_circle != null) {          
-        focus_circle.transition().duration(hover_trans_ms)
-        .style("stroke-width", "0px");
-      }
-      if (focus_links != null) {
-        focus_links.transition().duration(hover_trans_ms)
-          .style("opacity", .6)
-          .style("stroke", "#999")
-          .style("stroke-width", "1px");
-      }
-
-      // Determine focus circle selection, node ID
-      focus_circle = d3.select(this);
-      focus_node_id = focus_circle.attr('id');      
-
-      // Determine focus links
-      focus_links = d3.selectAll('.link').filter(
-        function(d, i) { 
-          return (d.source.name == focus_node_id || d.target.name == focus_node_id)  }
-      )
-
-      // Transition focus circle style
-      focus_circle.transition().duration(hover_trans_ms)
-        .style('stroke', '#000')
-        .style("stroke-width", "2px");
-
-      // Transition link style
-      focus_links.transition().duration(hover_trans_ms)
-        .style("opacity", 1)
-        .style("stroke", "#000")
-        .style("stroke-width", "2px");
-
-      // Update description / link box
-      node_description = node_details[focus_node_id] || "<p>Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters fanny pack non Terry Richardson locavore ethnic art party. You probably haven't heard of them Marfa hashtag gluten-free ennui. Art party shoreditch High Life, polaroid fashion axe ad helvetica. Occupy dolore High Life minim. Ethnic artisan Tonx 90's mlkshk lomo.</p>"
-      node_link_text = ""
-
-      node_links = all_nodes[focus_node_id].links
-      $.each(node_links, function(index, link) {
-
-        if (link.pred in active_predicates) {
-          node_link_text += 
-            "<b>" + link.source.name + "</b>" + 
-            " "   + link.pred + " " + 
-            "<b>" + link.target.name + "</b><br>";
-        }
-
-      });
-
-      descdiv.html( 
-        "<h2>" + focus_node_id + "</h2>" + 
-        "<p>" + node_description + "</p>" + 
-        "<p>" + node_link_text + "</p>" );
-
-    });
 
 
     // Create one SVG group per node element, for labels
@@ -327,6 +273,78 @@
     });
 
   };
+
+
+  var focus_circle = null;
+  var focus_links = null;
+
+  function selectNode(d3_node_sel) {
+
+
+    // Reset previous hover highlights
+    if (focus_circle != null) {          
+      focus_circle.transition().duration(hover_trans_ms)
+      .style("stroke-width", "0px");
+    }
+    if (focus_links != null) {
+      focus_links.transition().duration(hover_trans_ms)
+        .style("opacity", .6)
+        .style("stroke", "#999")
+        .style("stroke-width", "1px");
+    }
+
+    // Determine focus circle selection, node ID
+    focus_circle = d3_node_sel;
+    focus_node_id = focus_circle.attr('id');      
+
+    // Determine focus links
+    focus_links = d3.selectAll('.link').filter(
+      function(d, i) { 
+        return (d.source.name == focus_node_id || d.target.name == focus_node_id)  }
+    )
+
+    // Transition focus circle style
+    focus_circle.transition().duration(hover_trans_ms)
+      .style('stroke', '#000')
+      .style("stroke-width", "2px");
+
+    // Transition link style
+    focus_links.transition().duration(hover_trans_ms)
+      .style("opacity", 1)
+      .style("stroke", "#000")
+      .style("stroke-width", "2px");
+
+    // Update description / link box
+    node_description = node_details[focus_node_id] || "<p>Cupidatat irure consectetur, intelligentsia Brooklyn gluten-free farm-to-table bitters fanny pack non Terry Richardson locavore ethnic art party. You probably haven't heard of them Marfa hashtag gluten-free ennui. Art party shoreditch High Life, polaroid fashion axe ad helvetica. Occupy dolore High Life minim. Ethnic artisan Tonx 90's mlkshk lomo.</p>"
+    node_link_text = ""
+
+    node_links = all_nodes[focus_node_id].links
+    $.each(node_links, function(index, link) {
+
+      if (link.pred in active_predicates) {
+        node_link_text += 
+          "<a class='node_anchor' id='"+link.source.name+"'>" + link.source.name + "</a>" + 
+          " "   + link.pred + " " + 
+          "<a class='node_anchor' id='"+link.target.name+"'>" + link.target.name + "</a><br>";
+      }
+
+    });
+
+    var descdiv = d3.select("#description");
+    descdiv.html( 
+      "<h2>" + focus_node_id + "</h2>" + 
+      "<p>" + node_description + "</p>" + 
+      "<p>" + node_link_text + "</p>" );
+
+    $('a.node_anchor').click( function(e) {
+
+      node_sel = d3.select(".node[id='"+e.currentTarget.id+"']");
+      selectNode(node_sel)
+
+    });
+
+
+  }
 
   function reset() {
     curr_nodes = d3.values(all_nodes);

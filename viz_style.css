@@ -29,6 +29,10 @@ div {
   opacity: 0;
 }
 
+a.node_anchor {
+  color: blue;
+}
+
 
 
 text {
