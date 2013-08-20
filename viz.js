@@ -321,7 +321,10 @@
     node_links = all_nodes[focus_node_id].links
     $.each(node_links, function(index, link) {
 
-      if (link.pred in active_predicates) {
+      if (link.pred in active_predicates &&
+          active_groups[link.source.group] && 
+          active_groups[link.target.group]) {
+
         node_link_text += 
           "<a class='node_anchor' id='"+link.source.name+"'>" + link.source.name + "</a>" + 
           " "   + link.pred + " " + 
