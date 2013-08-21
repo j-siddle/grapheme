@@ -1,4 +1,9 @@
 {
-	"Persona": "<i>Hello world</i> This is a <a href='data/node_details.json'>link</a> to some website",
-	"Machine Learning": "Hola worldio"
+"Persona": "Personas are different aspects of a personality, of me. Here I've chosen the aspects of my personality that will be most interesting to visitors to this website. You might be a friend, or familymember, you might be interested in the papers I've written or in my blog,or you might want to collaborate on a project. Use the different filtersand view options to find the right perspective, then explore :)",
+
+"Machine Learning": "Hola worldio",
+
+"Oxford University":"I attended Oxford as a mature student during the second half of the noughties. Oxford is a great University, both in terms of the educational programme and in terms of research outputs, culture, and history. It was a privilege to study Software Engineering there, my only regret is that I only scratched the surface of Oxford life!"
+
+
 }
