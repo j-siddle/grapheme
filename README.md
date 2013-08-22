@@ -12,16 +12,14 @@ TODO
 * Make predicates clearer
 * Add predicate colours
 * Add click focus
-* Create view mechanism
+* Add all views
+* Update checkboxes when views change
 
 Specific views
 --------------
 
-* Just entities
-* Personas + entities
-* Classes + entities
-* Everything
-
+* All entities, unselected predicates
+* ...
 
 MISC IDEAS
 ----------

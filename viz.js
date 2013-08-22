@@ -19,11 +19,13 @@
   var all_nodes = {};
   var all_groups = {};
   var node_details = {};
+  var views = {};
 
   // User selections
   var active_groups = {};
   var active_predicates = {};
   var active_personas = {};
+  var singletons = true;
 
   // The selected data, displayed in the graph
   var curr_links = null;
@@ -114,6 +116,44 @@
       node_details = data;
     });
 
+    // Read views, create view buttons and behaviour
+    $.getJSON('data/views.json', function(data) {
+
+      $.each(data, function(index, view) {
+
+        views[view.id] = view;
+
+        $("#views").append("<input type='button' id='"+view.id+"' value='"+view.name+"'><br/>")
+
+        $("#"+view.id).click( function() {
+
+          active_groups = {}
+          $.each(view.groups, function(index, group) {
+            active_groups[group] = true
+          });
+
+          if (view.predicates) { 
+            active_predicates = {}
+            $.each(view.predicates, function(index, pred) {
+              active_predicates[pred] = true
+            });
+          } else {
+            $.each(orig_graph.predicates, function(index, predicate) {
+              active_predicates[predicate.id] = true;
+            });
+          }
+
+          singletons = view.singletons;
+
+          // Refresh graph data, then update the vizualization
+          filterData(active_groups, active_personas, active_predicates);
+          updateViz();
+        });
+
+      });
+
+    });
+
   }
 
 
@@ -145,8 +185,7 @@
 
     // Define nodes ... either according to selected groups / personas
     // or according to the connected set
-    console.log( $('#singletonChoice').is(":checked") )
-    if ( $('#singletonChoice').is(":checked") == true ) {
+    if (singletons) {
 
       $.each(all_nodes, function(index, node) {
 
@@ -356,6 +395,10 @@
   }
 
   function refresh() {
+
+    // Update state according to checkboxes, etc
+    singletons = $('#singletonChoice').is(':checked')
+
     filterData(active_groups, active_personas, active_predicates);
     updateViz( );
   }

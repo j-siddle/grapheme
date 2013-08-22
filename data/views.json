@@ -1,0 +1,6 @@
+[
+{"id":"everything","name":"Everything","groups":[1,2,3]},
+{"id":"things_view","name":"Thing","groups":[2,3]},
+{"id":"personas_view","name":"Persona","groups":[1,2]},
+{"id":"education_view","name":"Education","groups":[1,2,3], "predicates":["awarded","received","studied_at"],"singletons":false}
+]
