@@ -3,8 +3,6 @@
 
   var hover_trans_ms = 200;
 
-  //var color = d3.scale.category20();
-
   var force = d3.layout.force()
       .charge(-220)
       .linkDistance(60)
@@ -59,31 +57,29 @@
 
       $("#options").append("<br>")
 
-      // Deduce list of groups, and create group buttons
+      // Deduce list of groups, and create group buttons (disabled initially)
       $.each(json_data.groups, function(index, group) {
 
         all_groups[group.id] = group;
+        active_groups = {}
 
         button_id = "group_selector_" + group.id;
 
         $("#options").append(
-          "<input type='checkbox' id='"+button_id+"' value='"+group.id+"'>"
+          "<input class='group_selector' type='checkbox' id='"+button_id+"' value='"+group.id+"'>"
           +group.name
           )
         $("#"+button_id).change( function() {
 
           sel_grp = $(this).val();
-          $(this).is(':checked') ? active_groups[sel_grp] = true : delete active_groups[sel_grp] ;
+          $(this).is(":checked") ? active_groups[sel_grp] = true : delete active_groups[sel_grp] ;
 
-          // Refresh graph data, then update the vizualization
-          filterData(active_groups, active_personas, active_predicates);
-          updateViz();
-
+          refresh();
         });
       });
 
 
-      // Provide predicate selectors for expert mode
+      // Provide predicate selectors (enable all initially)
       $("#options").append("<br><br>")
 
       $.each(json_data.predicates, function(index, predicate) {
@@ -91,39 +87,44 @@
         active_predicates[predicate.id] = true;
 
         $("#options").append(
-          "<input type='checkbox' checked id='"+predicate.id+"' value='"+predicate.id+"'>"
+          "<input class='predicate_selector' type='checkbox' checked id='"+predicate.id+"' value='"+predicate.id+"'>"
           +predicate.name)
 
         $("#"+predicate.id).change( function() {
 
           sel_pred = $(this).val();
-          $(this).is(':checked') ? active_predicates[sel_pred] = true : delete active_predicates[sel_pred] ;
+          $(this).is(":checked") ? active_predicates[sel_pred] = true : delete active_predicates[sel_pred] ;
 
-          // Refresh graph data, then update the vizualization
-          filterData(active_groups, active_personas, active_predicates);
-          updateViz();
-
+          refresh();
         });
         
       });
 
-      // Now filter initial data set
-      filterData(active_groups, active_personas, active_predicates);
-
     });
 
-    $.getJSON('data/node_details.json', function(data) {
+    // Set initial state of singleton button, add click logic
+    $("#singletonChoice")
+      .prop("checked", singletons)
+      .click( function() {
+        // Update state according to checkboxes, etc
+        singletons = $("#singletonChoice").is(":checked")
+
+        refresh();       
+      } );
+
+
+    $.getJSON("data/node_details.json", function(data) {
       node_details = data;
     });
 
     // Read views, create view buttons and behaviour
-    $.getJSON('data/views.json', function(data) {
+    $.getJSON("data/views.json", function(data) {
 
       $.each(data, function(index, view) {
 
         views[view.id] = view;
 
-        $("#views").append("<input type='button' id='"+view.id+"' value='"+view.name+"'><br/>")
+        $("#views").append("<input type='button' id='"+view.id+"' value='"+view.name+"'>")
 
         $("#"+view.id).click( function() {
 
@@ -143,12 +144,11 @@
             });
           }
 
-          singletons = view.singletons;
+          singletons = (view.singletons == true);
 
-          // Refresh graph data, then update the vizualization
-          filterData(active_groups, active_personas, active_predicates);
-          updateViz();
-        });
+          refresh();
+          updateSelectors();
+       });
 
       });
 
@@ -156,6 +156,12 @@
 
   }
 
+
+  // Re-filter data, then update the vizualization
+  function refresh() {
+    filterData(active_groups, active_personas, active_predicates);
+    updateViz();
+  }
 
   /* Given the selected groups, personas, and predicates,
      filter viz data to find current nodes and links */
@@ -209,17 +215,14 @@
   }
 
 
-  
-
-
   /* Create visualization elements, define hover behaviour,
      define force graph tick behaviour */
   function updateViz() {
 
-    $('.node').remove();
-    $('.link').remove();
-    $('.label').remove();
-    $('.shadow').remove();
+    $(".node").remove();
+    $(".link").remove();
+    $(".label").remove();
+    $(".shadow").remove();
 
     // Use the force
     force
@@ -334,17 +337,17 @@
 
     // Determine focus circle selection, node ID
     focus_circle = d3_node_sel;
-    focus_node_id = focus_circle.attr('id');      
+    focus_node_id = focus_circle.attr("id");      
 
     // Determine focus links
-    focus_links = d3.selectAll('.link').filter(
+    focus_links = d3.selectAll(".link").filter(
       function(d, i) { 
         return (d.source.name == focus_node_id || d.target.name == focus_node_id)  }
     )
 
     // Transition focus circle style
     focus_circle.transition().duration(hover_trans_ms)
-      .style('stroke', '#000')
+      .style("stroke", "#000")
       .style("stroke-width", "2px");
 
     // Transition link style
@@ -378,7 +381,7 @@
       "<p>" + node_description + "</p>" + 
       "<p>" + node_link_text + "</p>" );
 
-    $('a.node_anchor').click( function(e) {
+    $("a.node_anchor").click( function(e) {
 
       node_sel = d3.select(".node[id='"+e.currentTarget.id+"']");
       selectNode(node_sel)
@@ -388,26 +391,23 @@
 
   }
 
-  function reset() {
-    curr_nodes = d3.values(all_nodes);
-    curr_links = orig_graph.links;
-    updateViz( );
+  function updateSelectors() {
+    $("#singletonChoice").prop("checked", singletons);
+
+    $(".predicate_selector").each( function(index) {
+      $(this).prop("checked", active_predicates[$(this).val()] == true);
+    });
+
+    $(".group_selector").each( function(index) {
+      $(this).prop("checked", active_groups[$(this).val()] == true);
+    });
+
+
   }
 
-  function refresh() {
-
-    // Update state according to checkboxes, etc
-    singletons = $('#singletonChoice').is(':checked')
-
-    filterData(active_groups, active_personas, active_predicates);
-    updateViz( );
-  }
-
-
-  // Initialize, then update visualization
+  // Initialize, filter initial data set, then update the viz
   init();
-  updateViz();
-
+  refresh();
 
 
 
