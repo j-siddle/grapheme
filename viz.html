@@ -3,7 +3,7 @@
 
 
 <head>
-  <link rel="stylesheet" type="text/css" href="viz_style.css">
+  <link rel="stylesheet" type="text/css" href="viz_style.css">  
   <base target="_blank">
 </head>
 
@@ -11,18 +11,31 @@
 
   <div id="viz"></div>
 
-  <div id="views"></div>
-  <br>
+  <div>
 
-  <div id="options">
-    <input id="singletonChoice" type="checkbox"/>Singletons<br>
+    <div id="views"></div>
+
+    <p>
+
+    <div id="options" hidden>
+      <input id="singletonChoice" type="checkbox"/>Singletons
+
+      <br>
+
+    </div>
+
+    <p>
+
+    <div id="optionToggle" class="toggler"/>More...</div>
+
+    <div id="description"></div>
+
   </div>
 
-  <div id="description"></div>
-  <div id="tooltip"></div>
-
   <script src="d3.v3.min.js"></script>
-  <script src="jquery-1.10.2.min.js"></script>
+
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
   <script src="viz.js"></script>
 

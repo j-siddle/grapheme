@@ -12,28 +12,23 @@ div {
   stroke-width: 1px;
 }
 
+.toggler {
+  text-decoration: underline;
+}
+
 #viz {
   float: left;
 }
 
-#tooltip {   
-  position: absolute;           
-  text-align: left;           
-  width: 150px;                  
-  height: 28px;                 
-  padding: 2px;             
-  background: lightsteelblue;   
-  border: 0px;      
-  border-radius: 8px;           
-  pointer-events: none; 
-  opacity: 0;
-}
 
-a.node_anchor {
+a.node_link {
   color: blue;
+  text-decoration: underline;
 }
 
-
+a.node_name {
+  color: darkorchid;
+}
 
 text {
   pointer-events: none;

@@ -24,6 +24,7 @@
   var active_predicates = {};
   var active_personas = {};
   var singletons = true;
+  var hide_options = true;
 
   // The selected data, displayed in the graph
   var curr_links = null;
@@ -112,7 +113,23 @@
         refresh();       
       } );
 
+    // Attach show/hide behaviour
+    $("#optionToggle").click(function() {     
 
+        toggler = $(this);
+        options = $("#options");
+
+        options.toggle("fade", {}, 400, function() {
+          if ( $(options).is(":visible") ) {
+            toggler.text("... less")
+          } else {
+            toggler.text("More ...")
+          }
+        });
+
+    });
+
+    // Read node details
     $.getJSON("data/node_details.json", function(data) {
       node_details = data;
     });
@@ -367,10 +384,14 @@
           active_groups[link.source.group] && 
           active_groups[link.target.group]) {
 
+        if (link.source.name == focus_node_id) {
+
+        }
+
         node_link_text += 
-          "<a class='node_anchor' id='"+link.source.name+"'>" + link.source.name + "</a>" + 
+          "<a class='" + (link.source.name == focus_node_id ? "node_name" : "node_link") + "' id='"+link.source.name+"'>" + link.source.name + "</a>" + 
           " "   + link.pred + " " + 
-          "<a class='node_anchor' id='"+link.target.name+"'>" + link.target.name + "</a><br>";
+          "<a class='" + (link.target.name == focus_node_id ? "node_name" : "node_link") + "' id='"+link.target.name+"'>" + link.target.name + "</a><br>";
       }
 
     });
@@ -381,7 +402,7 @@
       "<p>" + node_description + "</p>" + 
       "<p>" + node_link_text + "</p>" );
 
-    $("a.node_anchor").click( function(e) {
+    $("a.node_link").click( function(e) {
 
       node_sel = d3.select(".node[id='"+e.currentTarget.id+"']");
       selectNode(node_sel)
