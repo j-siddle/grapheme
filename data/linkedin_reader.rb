@@ -37,8 +37,8 @@ class LinkedInReader
 
 		resp = http.request(request).body
 
-		full_data = process_profile(resp)
-		
+		full_data = process_li_profile(resp)
+
 		JSON.dump(full_data);
 
 	end
@@ -59,17 +59,17 @@ class LinkedInReader
 
 	end
 
-	def process_profile(li_json_profile)
+	def process_li_profile(li_json_profile)
 
 		# Define groups
-		@group_array << { :name => "Persona", :id => "1", :color => "darkorange" }
-		@group_array << { :name => "Entity", :id => "2", :color => "lightskyblue" }
-		@group_array << { :name => "Class", :id => "3", :color => "purple" }
+		@group_array << { :name => "Persona", :id => group_id["Persona"].to_s, :color => "darkorange" }
+		@group_array << { :name => "Entity", :id => group_id["Entity"].to_s, :color => "lightskyblue" }
+		@group_array << { :name => "Class", :id => group_id["Class"].to_s, :color => "purple" }
 
 		# Define personas, classes, predicates
-		@nodes.add( { :name => "Persona", :group => 3 } )
-		@nodes.add( { :name => "Skill", :group => 3 } )
-		@nodes.add( { :name => "Professional", :group => 1 } )
+		@nodes.add( { :name => "Persona", :group => group_id["Class"] } )
+		@nodes.add( { :name => "Skill", :group => group_id["Class"] } )
+		@nodes.add( { :name => "Professional", :group => group_id["Persona"] } )
 
 		@triples << { :source => "Professional", :pred => "is_a", :target => "Persona", :value => 2 }
 
@@ -80,7 +80,7 @@ class LinkedInReader
 		profile = JSON.parse(li_json_profile);
 		process_skills( profile['skills']['values'] )
 
-		# Return the JSON
+		# Return the processed profile
 		{ :links => @triples, :nodes => @nodes.to_a, :predicates => @predicates.to_a, :groups => @group_array }
 
 	end

@@ -2,6 +2,8 @@ require_relative '../data/linkedin_reader'
 
 describe LinkedInReader do
 
+  blank_li_profile = '{ "skills": { "values": [] } }'
+
   it "should create a URI correctly" do
 
   	uri = LinkedInReader.new.make_uri("sometoken")
@@ -34,6 +36,18 @@ describe LinkedInReader do
     lir.triples[1].should == { :source => "Pubic topiary", :pred => "is_a", :target => "Skill", :value => 2 }
     lir.triples[2].should == { :source => "Professional", :pred => "skilled_in", :target => "Tidying up", :value => 2 }
     lir.triples[3].should == { :source => "Tidying up", :pred => "is_a", :target => "Skill", :value => 2 }
+
+  end
+
+  it "should create full profile hash" do
+
+	prof = LinkedInReader.new.process_li_profile( blank_li_profile )
+
+	# Basic profile elements
+	prof[:links].size.should == 1
+	prof[:nodes].size.should == 3
+	prof[:predicates].size.should == 2
+	prof[:groups].size.should == 3
 
   end
 
