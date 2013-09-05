@@ -6,31 +6,28 @@ Graph-based vizualization of personal information
 TODO
 ----
 
-* Add description per thing
-* Add description per relationship?
-* Add degree scaling for nodes (+links?)
-* Make predicates clearer
-* Add predicate colours
+* LinkedIn data
+* Clear predicate display 
+* Every thing has a description
+* Every relationship has a description
+* Add scaling for nodes / links - various options (e.g. degree)
 * Add click focus
-* Add all views
-* Update checkboxes when views change
+* Add click hiding
+* Complete set of views
+* Add predicate colours?
+* Human readable predicate display names
+* Marge/refactor data processing 
+* Refactor group assignment / storage
 
 Specific views
 --------------
 
-* All entities, unselected predicates
-* ...
+* Type focus
+* Persona focus
 
 MISC IDEAS
 ----------
 
-* Define facts to capture
-* Generate full data set
-* Play with data
-* Allow predicate ID and readable name
-* Full group data
-* Split 'Person'
 * Multi-level Publication (e.g. Journal is_a Publication)
-* Limit view by persona
 
 
