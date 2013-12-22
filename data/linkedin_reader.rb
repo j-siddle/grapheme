@@ -24,6 +24,7 @@ class LinkedInReader
 		@predicates = Set.new
 	end
 
+	# Todo - add unit tests
 	def read_profile(li_access_token)
 
 		uri = make_uri(li_access_token)
@@ -35,12 +36,7 @@ class LinkedInReader
 		http.use_ssl = true
 		http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-		resp = http.request(request).body
-
-		full_data = process_li_profile(resp)
-
-		JSON.dump(full_data);
-
+		http.request(request).body
 	end
 
 	def make_uri(access_token) 
@@ -59,26 +55,39 @@ class LinkedInReader
 
 	end
 
-	def process_li_profile(li_json_profile)
+	def process_li_profile(profile)
 
-		# Define groups
+		# Define display groups
 		@group_array << { :name => "Persona", :id => group_id["Persona"].to_s, :color => "darkorange" }
 		@group_array << { :name => "Entity", :id => group_id["Entity"].to_s, :color => "lightskyblue" }
 		@group_array << { :name => "Class", :id => group_id["Class"].to_s, :color => "purple" }
 
-		# Define personas, classes, predicates
+		# Define class nodes
 		@nodes.add( { :name => "Persona", :group => group_id["Class"] } )
 		@nodes.add( { :name => "Skill", :group => group_id["Class"] } )
-		@nodes.add( { :name => "Professional", :group => group_id["Persona"] } )
+		@nodes.add( { :name => "Patent", :group => group_id["Class"] } )
+		@nodes.add( { :name => "Qualification", :group => group_id["Class"] } )
 
+		@nodes.add( { :name => "Professional", :group => group_id["Persona"] } )
+		@nodes.add( { :name => "Inventor", :group => group_id["Persona"] } )
+		@nodes.add( { :name => "Student", :group => group_id["Persona"] } )
+
+		# Define persona-class relations
 		@triples << { :source => "Professional", :pred => "is_a", :target => "Persona", :value => 2 }
+		@triples << { :source => "Inventor", :pred => "is_a", :target => "Persona", :value => 2 }
+		@triples << { :source => "Student", :pred => "is_a", :target => "Persona", :value => 2 }
 
 		@predicates.add ( { :name => "skilled_in", :id => "skilled_in" } )
 		@predicates.add ( { :name => "is_a", :id => "is_a" } )
+		@predicates.add ( { :name => "invented", :id => "invented" } )
+		@predicates.add ( { :name => "attended", :id => "attended" } )
+		@predicates.add ( { :name => "awarded", :id => "awarded" } )
+		@predicates.add ( { :name => "taught", :id => "taught" } )
 
 		# Parse the JSON, extract facts
-		profile = JSON.parse(li_json_profile);
 		process_skills( profile['skills']['values'] )
+		process_educations( profile['educations']['values'] )
+		process_patents( profile['patents']['values'] )
 
 		# Return the processed profile
 		{ :links => @triples, :nodes => @nodes.to_a, :predicates => @predicates.to_a, :groups => @group_array }
@@ -97,6 +106,45 @@ class LinkedInReader
 		end
 
 	end
+
+	def process_educations(li_educations)
+
+		li_educations.each do |educ|
+
+			uni_name = educ['schoolName']
+			subject = educ['fieldOfStudy']
+			degree = educ['degree']
+
+			award = "#{degree} - #{subject}"
+
+			@nodes.add( { :name => uni_name,  :group => group_id['Entity'] } )
+			@nodes.add( { :name => award, :group => group_id['Entity'] } )
+
+			@triples << { :source => "Student", :pred => "attended", :target => uni_name, :value => 2 }
+			@triples << { :source => "Student", :pred => "awarded", :target => award, :value => 2 }
+			@triples << { :source => uni_name, :pred => "taught", :target => award, :value => 2 }
+
+			@triples << { :source => uni_name, :pred => "is_a", :target => "School", :value => 2 }
+			@triples << { :source => award, :pred => "is_a", :target => "Qualification", :value => 2 }
+
+		end
+
+	end
+
+	# Todo - add unit tests
+	def process_patents(li_patents)
+
+		li_patents.each do |patent|
+
+			patent_title = patent['title']
+			@nodes.add( { :name => patent_title,  :group => group_id['Entity'] } )
+			@triples << { :source => "Inventor", :pred => "invented", :target => patent_title, :value => 2 }
+			@triples << { :source => patent_title, :pred => "is_a", :target => "Patent", :value => 2 }
+
+		end
+
+	end
+
 
 end
 

@@ -18,6 +18,7 @@ TODO
 * Human readable predicate display names
 * Marge/refactor data processing 
 * Refactor group assignment / storage
+* Generated IDs for LinkedIn entities with long names
 
 Specific views
 --------------
