@@ -1,5 +1,5 @@
-grapheme
-========
+persona-graph
+=============
 
 Graph-based vizualization of personal information
 
