@@ -1,7 +1,13 @@
 [
-{"id":"things_view","name":"Thing","groups":[2,3]},
-{"id":"personas_view","name":"Persona","groups":[1,2]},
-{"id":"education_view","name":"Education","groups":[1,2,3], "predicates":["awarded","received","studied_at"],"singletons":false},
+{"id":"software_engineer","name":"Software Engineer","groups":[1,2], "predicates":["skilled_in","can_write","accredited_with"],"singletons":false},
+{"id":"product_manager","name":"Product Manager","groups":[1,2], "predicates":["responsible_for"],"singletons":false},
+{"id":"employee","name":"Employee","groups":[1,2], "predicates":["worked_for","has"],"singletons":false},
+{"id":"person","name":"Person","groups":[1,2], "predicates":["practiced","love"],"singletons":false},
+{"id":"writer","name":"Writer","groups":[1,2], "predicates":["wrote","edited","mentioned_in","blogged_on","published_in"],"singletons":false},
+{"id":"pub_speak","name":"Public Speaker","groups":[1,2], "predicates":["presented_at"],"singletons":false},
+{"id":"inventor","name":"Inventor","groups":[1,2], "predicates":["filed_patent","published_via","awarded"],"singletons":false},
+{"id":"academic","name":"Academic","groups":[1,2], "predicates":["received","studied_at","published"],"singletons":false},
+{"id":"digital_ent","name":"Digital Entity","groups":[1,2], "predicates":["on","recorded_by","identified_by"],"singletons":false},
 {"id":"everything","name":"Everything","groups":[1,2,3]},
-{"id":"cyo_links","name":"CYO Links","groups":[1,2,3], "predicates":[],"singletons":true}
+{"id":"cyo_links","name":"Just Nodes","groups":[1,2,3], "predicates":[],"singletons":true}
 ]
