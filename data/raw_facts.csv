@@ -1,72 +1,4 @@
-Software Engineer,skilled_in,Software Design
-Software Engineer,skilled_in,Software Architecture
-Software Engineer,skilled_in,Machine Learning
-Software Engineer,skilled_in,Text Mining
-Software Engineer,skilled_in,Data Mining
-Software Engineer,skilled_in,Big Data
-Software Engineer,skilled_in,Application Development
-Software Engineer,skilled_in,Data Processing
-Software Engineer,can_write,Java
-Software Engineer,can_write,Ruby
-Software Engineer,can_write,JavaScript
-Software Engineer,accredited_with,MBCS CITP
-Software Engineer,accredited_with,DeveloperWorks Author Award
-
-Product Manager,responsible_for,That's Confidential
-
-Employee,worked_for,Mercia Software
-Employee,worked_for,Siemens Communications
-Employee,worked_for,IBM
-Employee,worked_for,Digital Science
-Employee,has,Curriculum Vitae
-
-Person,practiced,Tetsudo
-Person,love,Rock Climbing
-Person,love,Writing
-Person,love,Old Computer Games
-Person,love,Comic Books
-Person,love,Movies
-Person,love,Travel
-
-Writer,wrote,[Journal Articles]
-Writer,wrote,[Technical Articles]
-Writer,wrote,[Tutorial Articles]
-Writer,wrote,[Three Friends article]
-Writer,edited,POSA For Dummies
-Writer,mentioned_in,PRC text mining
-Writer,blogged_on,Boing Boing
-Writer,blogged_on,Digital Science Blog
-Writer,blogged_on,Variable Tree
-Writer,published_in,TPLOP
-Writer,published_in,IBM DeveloperWorks
-Writer,published_in,ObjektSpectrum
-
-Public Speaker,presented_at,[Some places]
-Public Speaker,presented_at,iAnnotate
-
-Inventor,filed_patent,[IBM patent 1]
-Inventor,filed_patent,[IBM patent 2]
-Inventor,published_via,IP.com
-Inventor,awarded,Siemens Innovation Award
-
-Academic,received,BSc Computing (1st Class)
-Academic,received,MSc Software Engineering (Distinction)
-Academic,studied_at,Loughborough University
-Academic,studied_at,Oxford University
-Academic,studied_at,Coursera
-Academic,received,Calculus One
-Academic,received,Machine Learning
-Academic,published,[Journal Articles]
-Academic,published_in,TPLOP
-
-Digital Entity,on,LinkedIn
-Digital Entity,on,Twitter
-Digital Entity,on,Github
-Digital Entity,recorded_in,Flickr
-Digital Entity,identified_by,ISNI
-Digital Entity,identified_by,Orcid
-
-
+### Personas
 Software Engineer,is_a,Persona
 Product Manager,is_a,Persona
 Employee,is_a,Persona
@@ -77,37 +9,81 @@ Inventor,is_a,Persona
 Academic,is_a,Persona
 Digital Entity,is_a,Persona
 
-Software Design,is_a,Skill
-Software Architecture,is_a,Skill
-Machine Learning,is_a,Skill
-Text Mining,is_a,Skill
-Data Mining,is_a,Skill
-Big Data,is_a,Skill
-Application Development,is_a,Skill
-Data Processing,is_a,Skill
-Java,is_a,Skill
-Ruby,is_a,Skill
-JavaScript,is_a,Skill
 
-BSc Computing (1st Class),is_a,Award
-MSc Software Engineering (Distinction),is_a,Award
+### Primary relations - Persona to X
+
+Software Engineer,skilled_in,Software Design
+Software Engineer,skilled_in,Application Development
+Software Engineer,skilled_in,Web Services
+Software Engineer,skilled_in,Text and Data Mining
+Software Engineer,skilled_in,Information Vizualization
+Software Engineer,skilled_in,Machine Learning
+Software Engineer,skilled_in,Programming
+Software Engineer,accredited_with,MBCS CITP
+Software Engineer,wrote,Technical Articles
+
+Product Manager,responsible_for,Dimensions
+Product Manager,responsible_for,New Products
+
+Employee,worked_for,Mercia Software
+Employee,worked_for,Siemens Communications
+Employee,worked_for,IBM
+Employee,worked_for,Digital Science
+Employee,has,Curriculum Vitae
+
+Person,love,Rock Climbing
+Person,love,Writing
+Person,love,Old Computer Games
+Person,love,Comic Books
+Person,love,Movies
+Person,love,Travel
+Person,practiced,Tetsudo
+Person,lives_in,London
+Person,has_a,Digital Footprint
+
+Writer,wrote,Journal Papers
+Writer,wrote,Technical Articles
+Writer,blogs_on,The Variable Tree
+Writer,contributed_to,Popular Blogs
+Writer,edited,Dummies Book
+Writer,accredited_with,DeveloperWorks Author Award
+Writer,member_of,Pattern Writers Community
+Writer,has,Bibliography
+
+Public Speaker,presented_at,iAnnotate
+
+Inventor,filed_patent,Web Services Patent
+Inventor,filed_patent,Online Trade Patent
+Inventor,published_via,IP.com
+Inventor,received,Siemens Innovation Award
+
+Academic,received,BSc Computing (1st)
+Academic,received,MSc Software Engineering (Dist.)
+Academic,received,Coursera Classes
+Academic,studied_at,Loughborough University
+Academic,studied_at,Oxford University
+Academic,published,Journal Papers
+
+
+
+
+### Type defs
+
+Software Design,is_a,Skill
+Application Development,is_a,Skill
+Web Services,is_a,Skill
+Text and Data Mining,is_a,Skill
+Information Vizualization,is_a,Skill
+Machine Learning,is_a,Skill
+Programming,is_a,Skill
+
 MBCS CITP,is_a,Award
 DeveloperWorks Author Award,is_a,Award
 Siemens Innovation Award,is_a,Award
-Calculus One,is_a,Award
-Machine Learning,is_a,Award
+BSc Computing (1st),is_a,Award
+MSc Software Engineering (Dist.),is_a,Award
 
-Calculus One,is_a,Online Course
-Machine Learning,is_a,Online Course
-
-LinkedIn,is_a,Online Presence
-Twitter,is_a,Online Presence
-Github,is_a,Online Presence
-Flickr,is_a,Online Presence
-
-ISNI,is_a,Digital Identifier
-Orcid,is_a,Digital Identifier
-
+Coursera Classes,is_a,Online Course
 
 Mercia Software,is_a,Company
 Siemens Communications,is_a,Company
@@ -116,38 +92,56 @@ Digital Science,is_a,Company
 
 Loughborough University,is_a,Academic Institution
 Oxford University,is_a,Academic Institution
-Coursera,is_a,Academic Institution
 
-Tetsudo,is_a,Interest
+Journal Papers,is_a,Publication Venue
+Technical Articles,is_a,Publication Venue
+The Variable Tree,is_a,Publication Venue
+Popular Blogs,is_a,Publication Venue
+Dummies Book,is_a,Publication Venue
+IP.com,is_a,Publication Venue
+
+Pattern Writers Community,is_a,Public Forum
+iAnnotate,is_a,Public Forum
+
+Web Services Patent,is_a,Patent
+Online Trade Patent,is_a,Patent
+
+Dimensions,is_a,Product
+New Products,is_a,Product
+
 Rock Climbing,is_a,Interest
 Writing,is_a,Interest
 Old Computer Games,is_a,Interest
 Comic Books,is_a,Interest
 Movies,is_a,Interest
 Travel,is_a,Interest
-
-[Journal Articles],is_a,Article
-[Technical Articles],is_a,Article
-[Tutorial Articles],is_a,Article
-[Three Friends article],is_a,Blog Post
-POSA For Dummies,is_a,Book
-
-PRC text mining,is_a,Publication
-Boing Boing,is_a,Blog
-Digital Science Blog,is_a,Blog
-Variable Tree,is_a,Blog
-TPLOP,is_a,Journal
-IBM DeveloperWorks,is_a,Publication
-ObjektSpectrum,is_a,Publication
-
-[IBM patent 1],is_a,Patent
-[IBM patent 2],is_a,Patent
-IP.com,is_a,Publication
-
-[Some places],is_a,Forum
-iAnnotate,is_a,Forum
+Tetsudo,is_a,Interest
+London,is_a,Interest
 
 Curriculum Vitae,is_a,Object
-That's Confidential,is_a,Object
+Digital Footprint,is_a,Object
+Bibliography,is_a,Object
 
+
+### Other interesting relationships
+
+Dummies Book,published_by,Pattern Writers Community
+Software Engineer,wrote,Technical Articles
+Dimensions,supports,Academic Institution
+IBM,owns,Web Services Patent
+IBM,owns,Online Trade Patent
+IBM,publishes,IP.com
+IBM,awarded,DeveloperWorks Author Award
+Siemens Communications,awarded,Siemens Innovation Award
+Digital Science,supports,Academic Institution
+Digital Science,created,Dimensions
+Digital Science,created,New Products
+Writer,does,Writing
+The Variable Tree,part_of,Digital Footprint
+Popular Blogs,part_of,Digital Footprint
+iAnnotate,part_of,Digital Footprint
+IP.com,part_of,Digital Footprint
+Curriculum Vitae,part_of,Digital Footprint
+Loughborough University,awarded,BSc Computing (1st)
+Oxford University,awarded,MSc Software Engineering (Dist.)
 

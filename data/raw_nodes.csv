@@ -1,21 +1,21 @@
+### Fundamental classes. 
+### Can be derived from "type defs" section of raw_facts.csv
+
 Persona,3
 Skill,3
 Award,3
 Online Course,3
-Online Presence,3
-Digital Identifier,3
 Company,3
 Academic Institution,3
-Interest,3
-Article,3
-Blog Post,3
-Book,3
-Blog,3
-Publication,3
-Journal,3
+Publication Venue,3
+Public Forum,3
 Patent,3
-Forum,3
+Product,3
+Interest,3
 Object,3
+
+### Personas
+### Can be derived from "personas" section of raw_facts.csv
 
 Software Engineer,1
 Product Manager,1
@@ -25,75 +25,61 @@ Writer,1
 Public Speaker,1
 Inventor,1
 Academic,1
-Digital Entity,1
+
+### Other nodes
+### Can be derived from "Primary relations" section of raw_facts.csv
 
 Software Design,2
-Software Architecture,2
-Machine Learning,2
-Text Mining,2
-Data Mining,2
-Big Data,2
 Application Development,2
-Data Processing,2
-Java,2
-Ruby,2
-JavaScript,2
-
-BSc Computing (1st Class),2
-MSc Software Engineering (Distinction),2
+Web Services,2
+Text and Data Mining,2
+Information Vizualization,2
+Machine Learning,2
+Programming,2
 MBCS CITP,2
-DeveloperWorks Author Award,2
-Siemens Innovation Award,2
-Calculus One,2
+Technical Articles,2
 
-LinkedIn,2
-Twitter,2
-Github,2
-Flickr,2
-
-ISNI,2
-Orcid,2
+Dimensions,2
+New Products,2
 
 Mercia Software,2
 Siemens Communications,2
 IBM,2
 Digital Science,2
+Curriculum Vitae,2
 
-Loughborough University,2
-Oxford University,2
-Coursera,2
-
-Tetsudo,2
 Rock Climbing,2
 Writing,2
 Old Computer Games,2
 Comic Books,2
 Movies,2
 Travel,2
+Tetsudo,2
+London,2
+Digital Footprint,2
 
-[Journal Articles],2
-[Technical Articles],2
-[Tutorial Articles],2
-[Three Friends article],2
-POSA For Dummies,2
+Journal Papers,2
+Technical Articles,2
+The Variable Tree,2
+Popular Blogs,2
+Dummies Book,2
+DeveloperWorks Author Award,2
+Pattern Writers Community,2
+Bibliography,2
 
-PRC text mining,2
-Boing Boing,2
-Digital Science Blog,2
-Variable Tree,2
-TPLOP,2
-IBM DeveloperWorks,2
-ObjektSpectrum,2
-
-[IBM patent 1],2
-[IBM patent 2],2
-IP.com,2
-
-[Some places],2
 iAnnotate,2
 
-Curriculum Vitae,2
-That's Confidential,2
+Web Services Patent,2
+Online Trade Patent,2
+IP.com,2
+Siemens Innovation Award,2
+
+BSc Computing (1st),2
+MSc Software Engineering (Dist.),2
+Coursera Classes,2
+Loughborough University,2
+Oxford University,2
+Journal Papers,2
 
 
 

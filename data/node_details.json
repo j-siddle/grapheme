@@ -1,9 +1,43 @@
 {
 "Persona": "Personas are different aspects of a personality, of me. Here I've chosen the aspects of my personality that will be most interesting to visitors to this website. You might be a friend, or familymember, you might be interested in the papers I've written or in my blog,or you might want to collaborate on a project. Use the different filtersand view options to find the right perspective, then explore :)",
+"Skill": "Something I'm claiming to have a particular aptitude in.",
+"Award": "Various professional accreditations, awards, or accolades.",
+"Online Course": "A course I've taken using an online education system.",
+"Company": "A company I've worked for or had some relationship with.",
+"Academic Institution": "A University or other higher education institution I've studied at.",
+"Publication Venue": "A venue through which I've published an article or paper",
+"Public Forum": "A public forum in which I've participated.",
+"Patent": "A patent I've submitted, or been awarded.",
+"Product": "A product I've managed.",
+"Interest": "Something I'm interested in.",
+"Object": "A catch all for other things.",
+
+
 
 "Machine Learning": "Hola worldio",
 
-"Oxford University":"I attended Oxford as a mature student during the second half of the noughties. Oxford is a great University, both in terms of the educational programme and in terms of research outputs, culture, and history. It was a privilege to study Software Engineering there, my only regret is that I only scratched the surface of Oxford life!"
+"Oxford University":"I attended Oxford as a mature student during the second half of the noughties. Oxford is a great University, both in terms of the educational programme and in terms of research outputs, culture, and history. It was a privilege to study Software Engineering there, my only regret is that I only scratched the surface of Oxford life!",
+
+"Digital Footprint":
+"LinkedIn<br>Twitter<br>GitHub<br>The Variable Tree<br>Popular Blogs<br>Flickr<br>ORCID<br>",
+
+"Software Design":
+"Software Architecture<br>Data Processing<br>",
+
+"Programming":
+"Java<br>Ruby<br>JavaScript<br>D3<br>Haskell<br>",
+
+"Coursera Classes":
+"Calculus One<br>Machine Learning<br>",
+
+"Journal Papers":
+"TPLOP",
+
+"Technical Articles":
+"IBM DeveloperWorks<br>ObjektSpectrum<br>PRC text mining",
+
+"Popular Blogs":
+"Boing Boing<br>Digital Science Blog"
 
 
 }
