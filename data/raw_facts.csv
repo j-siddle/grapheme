@@ -1,4 +1,5 @@
-### Personas
+### Personas ###
+
 Software Engineer,is_a,Persona
 Product Manager,is_a,Persona
 Employee,is_a,Persona
@@ -7,10 +8,9 @@ Writer,is_a,Persona
 Public Speaker,is_a,Persona
 Inventor,is_a,Persona
 Academic,is_a,Persona
-Digital Entity,is_a,Persona
 
 
-### Primary relations - Persona to X
+### Primary relations - Persona to X ###
 
 Software Engineer,skilled_in,Software Design
 Software Engineer,skilled_in,Application Development
@@ -67,7 +67,7 @@ Academic,published,Journal Papers
 
 
 
-### Type defs
+### Type defs ###
 
 Software Design,is_a,Skill
 Application Development,is_a,Skill
