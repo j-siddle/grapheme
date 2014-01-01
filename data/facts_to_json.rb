@@ -66,5 +66,5 @@ end
 
 full_data = { :links => triples, :nodes => nodes.to_a, :predicates => predicates.to_a, :groups => group_array }
 
-obj = JSON.dump(full_data);
+obj = JSON.pretty_generate(full_data);
 puts obj
