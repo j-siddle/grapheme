@@ -12,6 +12,16 @@
 "Interest": "Something I'm interested in.",
 "Object": "A catch all for other things.",
 
+"Software Engineer": "Background info on SE experience",
+"Product Manager": "Background info on PM experience",
+"Employee": "I've been one since 1997",
+"Person": "That's me",
+"Writer": "I love writing in all forms, and I try to find ways to work it into my daily life whenever possible",
+"Public Speaker": "A bit more of a challenge than I'd like, but I love speaking in public. As long as I have time to prepare.",
+"Inventor": "I've had limited success inveting useful stuff.",
+"Academic": "My exposure to the Academic community took me as far as an MSc, but I never took the plunge to work for a doctorate.",
+
+
 
 
 "Machine Learning": "Hola worldio",
@@ -37,7 +47,9 @@
 "IBM DeveloperWorks<br>ObjektSpectrum<br>PRC text mining",
 
 "Popular Blogs":
-"Boing Boing<br>Digital Science Blog"
+"Boing Boing<br>Digital Science Blog",
 
+"Rock Climbing":
+"I was into it before it was, you know, mainstream<br><img width=150 src='assets/climbing.jpg'>"
 
 }

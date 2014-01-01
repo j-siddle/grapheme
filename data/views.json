@@ -1,4 +1,12 @@
 [
+{"id":"softeng_persona","name":"Software Engineer","groups":[1,2], "nodes":["Software Engineer"], "singletons":false},
+{"id":"prodman_persona","name":"Product Manager","groups":[1,2], "nodes":["Product Manager"], "singletons":false},
+{"id":"employee_persona","name":"Employee","groups":[1,2], "nodes":["Employee"], "singletons":false},
+{"id":"person_persona","name":"Person","groups":[1,2], "nodes":["Person","Digital Footprint"], "singletons":false},
+{"id":"writer_persona","name":"Writer","groups":[1,2], "nodes":["Writer"], "singletons":false},
+{"id":"speaker_persona","name":"Public Speaker","groups":[1,2], "nodes":["Public Speaker"], "singletons":false},
+{"id":"inventor_persona","name":"Inventor","groups":[1,2], "nodes":["Inventor"], "singletons":false},
+{"id":"academic_persona","name":"Academic","groups":[1,2], "nodes":["Academic"], "singletons":false},
 {"id":"everything","name":"Everything","groups":[1,2,3]},
-{"id":"cyo_links","name":"Just Nodes","groups":[1,2,3], "predicates":[],"singletons":true}
+{"id":"cyo_links","name":"Just Nodes","groups":[1,2,3], "predicates":[],"singletons":true, "isDefault":true}
 ]
