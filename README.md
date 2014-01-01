@@ -3,32 +3,25 @@ persona-graph
 
 Graph-based vizualization of personal information
 
-TODO
-----
+** Getting started
 
-* LinkedIn data
+Clone repo to local system
+Change directory into persona-graph
+Start a simple web server, e.g.: python -m SimpleHTTPServer
+Open a web browser, hit: localhost:8000/viz.html
+
+** TODO
+
+* LinkedIn data?
 * Clear predicate display 
 * Every thing has a description
 * Every relationship has a description
 * Add scaling for nodes / links - various options (e.g. degree)
 * Add click focus
 * Add click hiding
-* Complete set of views
+* Finalize views
 * Add predicate colours?
 * Human readable predicate display names
 * Marge/refactor data processing 
 * Refactor group assignment / storage
-* Generated IDs for LinkedIn entities with long names
-
-Specific views
---------------
-
-* Type focus
-* Persona focus
-
-MISC IDEAS
-----------
-
-* Multi-level Publication (e.g. Journal is_a Publication)
-
 
