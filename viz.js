@@ -22,7 +22,7 @@
   // User selections
   var active_groups = {};
   var active_predicates = {};
-  var active_personas = {};
+  var active_nodes = {};
   var singletons = true;
   var hide_options = true;
 
@@ -31,8 +31,10 @@
   var curr_nodes = null;
 
 
-  /* Prepare data model, create selection buttons and 
-     behaviour, request initial filter */
+
+  /* Function to:
+      - prepare data model
+      - create selection buttons and behaviour */
   function init() {
 
     d3.json("data/profile.json", function(error, json_data) {
@@ -79,7 +81,6 @@
         });
       });
 
-
       // Provide predicate selectors (enable all initially)
       $("#options").append("<br><br>")
 
@@ -101,7 +102,35 @@
         
       });
 
+      // Read node
+      $.getJSON("data/node_details.json", function(data) {
+        node_details = data;
+      });
+
+      // Read views, create view buttons and behaviour. Set default view
+      $.getJSON("data/views.json", function(data) {
+
+        $.each(data, function(index, view) {
+
+          views[view.id] = view;
+
+          $("#views").append("<input type='button' id='"+view.id+"' value='"+view.name+"'>")
+
+          $("#"+view.id).click( function() {
+            setCurrentView(view)
+          });
+
+          if (view.isDefault == true) {
+            setCurrentView(view)
+          }
+
+        });
+
+      });
+
     });
+
+
 
     // Set initial state of singleton button, add click logic
     $("#singletonChoice")
@@ -109,8 +138,8 @@
       .click( function() {
         // Update state according to checkboxes, etc
         singletons = $("#singletonChoice").is(":checked")
-
         refresh();       
+
       } );
 
     // Attach show/hide behaviour
@@ -129,60 +158,72 @@
 
     });
 
-    // Read node details
-    $.getJSON("data/node_details.json", function(data) {
-      node_details = data;
-    });
 
-    // Read views, create view buttons and behaviour
-    $.getJSON("data/views.json", function(data) {
-
-      $.each(data, function(index, view) {
-
-        views[view.id] = view;
-
-        $("#views").append("<input type='button' id='"+view.id+"' value='"+view.name+"'>")
-
-        $("#"+view.id).click( function() {
-
-          active_groups = {}
-          $.each(view.groups, function(index, group) {
-            active_groups[group] = true
-          });
-
-          if (view.predicates) { 
-            active_predicates = {}
-            $.each(view.predicates, function(index, pred) {
-              active_predicates[pred] = true
-            });
-          } else {
-            $.each(orig_graph.predicates, function(index, predicate) {
-              active_predicates[predicate.id] = true;
-            });
-          }
-
-          singletons = (view.singletons == true);
-
-          refresh();
-          updateSelectors();
-       });
-
-      });
-
-    });
 
   }
 
+  function setCurrentView(view) {
+
+    active_groups = {}
+    active_nodes = {}
+    active_predicates = {}
+
+    $.each(view.groups, function(index, group) {
+      active_groups[group] = true
+    });
+
+    if (view.predicates) { 
+      $.each(view.predicates, function(index, pred) {
+        active_predicates[pred] = true
+      });
+    } else {
+      $.each(orig_graph.predicates, function(index, predicate) {
+        active_predicates[predicate.id] = true;
+      });
+    }
+
+    if (view.nodes) { 
+      $.each(view.nodes, function(index, node) {
+        active_nodes[node] = true
+      });
+    } else {
+      $.each(orig_graph.nodes, function(index, node) {
+        active_nodes[node.name] = true;
+      });
+    }
+
+    singletons = (view.singletons == true);
+
+    updateSelectors();
+    refresh();          
+
+  }
+
+
+  function updateSelectors() {
+    $("#singletonChoice").prop("checked", singletons);
+
+    $(".predicate_selector").each( function(index) {
+      $(this).prop("checked", active_predicates[$(this).val()] == true);
+    });
+
+    $(".group_selector").each( function(index) {
+      $(this).prop("checked", active_groups[$(this).val()] == true);
+    });
+
+  }
 
   // Re-filter data, then update the vizualization
   function refresh() {
-    filterData(active_groups, active_personas, active_predicates);
+    filterData(active_groups, active_nodes, active_predicates);
     updateViz();
   }
 
+
+
   /* Given the selected groups, personas, and predicates,
      filter viz data to find current nodes and links */
-  function filterData(sel_groups, sel_personas, sel_predicates) {
+  function filterData(sel_groups, sel_nodes, sel_predicates) {
 
     // Clear lists of nodes and links
     curr_nodes = [];
@@ -193,12 +234,11 @@
 
     $.each(orig_graph.links, function(index, link) {
 
-      nodes_allowed = 
-        (link.source.group in sel_groups && link.target.group in sel_groups) ||
-        (link.source.group in sel_groups && link.target.name in sel_personas) ||
-        (link.source.name in sel_personas && link.target.group in sel_groups);
+      groups_allowed = (link.source.group in sel_groups) && (link.target.group in sel_groups);
+      nodes_allowed = (link.target.name in sel_nodes) || (link.source.name in sel_nodes);
+      pred_allowed = (link.pred in sel_predicates);
 
-      if (nodes_allowed && link.pred in sel_predicates) {
+      if (groups_allowed && nodes_allowed && pred_allowed) {
         curr_links.push(link); 
         connected_set[link.source.name] = link.source;
         connected_set[link.target.name] = link.target;
@@ -208,11 +248,17 @@
 
     // Define nodes ... either according to selected groups / personas
     // or according to the connected set
-    if (singletons) {
+    if (!singletons) {
+
+      for (var key in connected_set) {
+        curr_nodes.push(connected_set[key]);
+      }
+
+    } else {
 
       $.each(all_nodes, function(index, node) {
 
-        if (node.group == 1 && node.name in sel_personas) {
+        if (node.name in sel_nodes) {
           curr_nodes.push(node); 
         }
         else if (node.group in sel_groups ) {
@@ -220,12 +266,6 @@
         } 
 
       });
-
-    } else {
-
-      for (var key in connected_set) {
-        curr_nodes.push(connected_set[key]);
-      }
 
     }
 
@@ -412,66 +452,12 @@
 
   }
 
-  function updateSelectors() {
-    $("#singletonChoice").prop("checked", singletons);
-
-    $(".predicate_selector").each( function(index) {
-      $(this).prop("checked", active_predicates[$(this).val()] == true);
-    });
-
-    $(".group_selector").each( function(index) {
-      $(this).prop("checked", active_groups[$(this).val()] == true);
-    });
 
 
-  }
-
-  // Initialize, filter initial data set, then update the viz
+  // Initialize everything (just the once).
+  // Default view will be detected, then the vizualization refreshed
   init();
-  refresh();
 
-
-
-
-/*
-
-**************
-CODE FRAGMENTS
-**************
-
-
-PERSONA SELECTORS - init()
-
-  $("#options").append("<br>")
-  
-  numeric_node_index = 1;
-  $.each(all_nodes, function(index, node) {
-
-    if (node.group == 1) {
-
-      button_id = "persona_selector_" + numeric_node_index;
-      numeric_node_index ++;
-      $("#options").append(
-        "<input type='checkbox' class='persona_selector' id='"+button_id+"' value='"+node.name+"'>"
-        +node.name );
-
-      $("#"+button_id).change( function() {
-
-        sel_persona = $(this).val();
-        $(this).is(':checked') ? active_personas[sel_persona] = true : delete active_personas[sel_persona] ;
-
-        // Refresh graph data, then update the vizualization
-        filterData(active_groups, active_personas, active_predicates);
-        updateViz();
-
-      }); 
-    }
-
-  });
-
-
-
-*/
 
 
 
