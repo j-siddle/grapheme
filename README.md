@@ -3,14 +3,14 @@ persona-graph
 
 Graph-based vizualization of personal information
 
-** Getting started
+## Getting started
 
 Clone repo to local system
 Change directory into persona-graph
 Start a simple web server, e.g.: python -m SimpleHTTPServer
 Open a web browser, hit: localhost:8000/viz.html
 
-** TODO
+## TODO
 
 * LinkedIn data?
 * Clear predicate display 
